@@ -132,7 +132,7 @@ shared(msg) actor class NFTSale(
 
     private stable var tokensEntries : [(Nat, TokenInfo)] = [];
     private stable var usersEntries : [(Principal, UserInfo)] = [];
-     private var tokens = HashMap.HashMap<Nat, TokenInfo>(1, Nat.equal, Hash.hash);
+    private var tokens = HashMap.HashMap<Nat, TokenInfo>(1, Nat.equal, Hash.hash);
     private var users = HashMap.HashMap<Principal, UserInfo>(1, Principal.equal, Principal.hash);
     private var orders = HashMap.HashMap<Nat, OrderInfo>(1, Nat.equal, Hash.hash);
     private stable var txs: [TxRecord] = [];
