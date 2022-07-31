@@ -1,25 +1,60 @@
 <template>
-  <div class="process-image" >
-    <template v-if="wallet">
-        <div class="button-section">
-            <input type="file" class="button-t" spellcheck="false" @change="uploadFile($event)">
-            <div class="button-t" @click="mintImage"> Mint </div>
-        </div>
-        <div class="images-section">
-            <div v-for="(item, idx) in list_nft" :key="item+idx" @click="selectNft(item.index)" class="image-item" 
-            :class="item.index == select_nft ? 'sl-img':'usl-img'">
-                <img :src="item.image" width="200" height="300">
+  <div class="process-nft" >
+    <template v-if="wallet">   
+        <template v-if="views == 'my_nft'">
+            <div class="nft-header">
+                My NFT
             </div>
-        </div>
-        <div class="nft-section">
-            <div>
-                Image: {{select_nft}}
+            <div class="nft-body">
+                <div class="images-section">
+                    <div v-for="(item, idx) in list_nft" :key="item+idx" @click="selectNft(item.index)" class="image-item" 
+                    :class="item.index == select_nft ? 'sl-img':'usl-img'">
+                        <img :src="item.image" class="nft-image-item">
+                    </div>
+                </div>
+                <div class="button-section">
+                    <div class="button-t" @click="changeViews('transfer_nft')"> Transfer </div>
+                    <div class="button-t" @click="changeViews('create_nft')"> Create </div>
+                </div>
             </div>
-            <input type="text" v-model="to_principal">
+            <div class="nft-footer">
+                Owned by   {{wallet.principal}}
+            </div>
+        </template>
+        <template v-if="views == 'create_nft'">
+            <div class="create-nft-header">
+                Create New Item
+            </div>
+            <div class="load-image-section">
+                <input type="file" class="button-t" spellcheck="false" @change="uploadFile($event)">
+                <div class="input-text-section">
+                    NFT name <input type="text" v-model="nft_image_name" class="input-text-item">
+                </div>
+                <div class="input-text-section">
+                    Description <input type="text" v-model="nft_image_description" class="input-text-item">
+                </div>
+                <div class="button-t" @click="mintImage">
+                    Submit
+                </div>
+            </div>
+        </template>
+        <template v-if="views == 'transfer_nft'">
+            <div class="transfer-nft-header">
+                Send NFT
+            </div>
+            <div class="transfer-item-section">
+                <img :src="selected_nft.image" class="nft-image-item">
+            </div>
+            <div class="transfer-owned-section">
+                Owned by {{wallet.principal}}
+            </div>
+            <div class="input-text-section">
+                    To Principal <input type="text" v-model="to_principal" class="input-text-item">
+            </div>
             <div class="button-t" @click="transferNft">
-                Transfer
+                Send
             </div>
-        </div>
+        </template>
     </template>
     <template v-else>
         <p> Connect with a wallet to access this function </p>
@@ -43,10 +78,21 @@ var file = null
 var list_nft = ref([])
 var select_nft = ref(null)
 var to_principal = ref("")
+var views = ref("my_nft")
+var nft_image_name = ref("")
+var nft_image_description = ref("")
+var selected_nft = ref(null)
+
 
 const uploadFile = (event) => {
     file = event.target.files[0]
     console.log("upload success")
+}
+
+const changeViews = (view) => {
+    if(views.value != view){
+        views.value = view
+    }
 }
 
 const mintImage = async () => {
@@ -59,8 +105,8 @@ const mintImage = async () => {
             const nFile = new File(
                             [
                             JSON.stringify({
-                                description: "this is description",
-                                name: file.name,
+                                description: nft_image_description,
+                                name: nft_image_name,
                                 image: `${IPFS_LINK}${cid}/${file.name}`,
                             }),
                         ],
@@ -74,6 +120,7 @@ const mintImage = async () => {
             ]);
             console.log(res)
             getListNft()
+            changeViews("my_nft")
         }
         catch (error){
             console.log(error)
@@ -88,6 +135,7 @@ const transferNft = async () => {
         to_principal.value = ""
         select_nft.value = null
         getListNft()
+        changeViews("my_nft")
     }
 }
 
@@ -113,6 +161,7 @@ watchEffect(() => {
             list_nft.value = []
             select_nft.value = null
             to_principal.value = ""
+            views.value = "my_nft"
         }
 });
 

@@ -28,10 +28,81 @@ shared(msg) actor class NFTSale(
     _owner: Principal,
     ) = this {
 
-    public shared({caller}) func getPrincipal() : async Principal{
-        return caller;
+    
+    public type Profile = {
+        id: Nat;
+        name : Text;
+        date_of_birth : Text;
+        phone: Text;
+        address: Text;
+        sex: Text;
     };
 
+    // Create a  new profile and store it inside the hashmap : the Key is the principal of the caller and the Value is the Profile submited.
+    stable var entries : [(Nat, Profile)] = [];
+    let users_profile : HashMap.HashMap<Nat, Profile> = HashMap.HashMap<Nat, Profile>(0, Nat.equal, Hash.hash);
+
+    // Principal methods of the HashMap.
+
+    // .put() : Create
+    // .get() : Read 
+    // .replace() : Update
+    // .delete() : Delete
+
+    // Create. Caller is the principal of the caller
+    public shared ({caller}) func create_profile(user : Profile) : async Profile {
+        users_profile.put(user.id, user);
+        return user;
+    };
+    
+    public func get_all_profile() : async [(Nat, Profile)] {
+        return Iter.toArray(users_profile.entries());
+    };
+
+    // Read. Optional type needed.
+    public query func read_profile(id : Nat) : async ?Profile {
+        return(users_profile.get(id));
+    };
+
+    //public shared ({caller}) func test() : async Text {
+    //    return("Test passed");
+    //};
+
+
+    //Update. Result type introduced. Switch/Case.
+    public shared({caller}) func update_profile(id : Nat,user : Profile) : async Result.Result<Text,Text> {
+        switch(users_profile.get(id)){
+            case(null) return #err("There is no user profile for id : " # Nat.toText(id));
+            case(?userl) {
+                switch(users_profile.remove(id)){
+                    case(null) {
+                        return #err("There is no profile for user with id " # Nat.toText(id));
+                    };
+                    case(?userd){
+                        users_profile.put(id, user);
+                        return #ok("Profile modified for user with id : " # Nat.toText(id));
+                    };
+                };
+                return #err("There is no profile for user with id " # Nat.toText(id));
+            };
+        };
+    };
+
+    //Delete.
+    public shared({caller}) func delete_profile(id : Nat) : async Result.Result<(), Text> {
+	switch(users_profile.remove(id)){
+            case(null) {
+                return #err("There is no profile for user with id " # Nat.toText(id));
+            };
+            case(?user){
+                return #ok();
+            };
+        };
+    };
+
+
+
+    // NFT
     type Metadata = Types.Metadata;
     type Location = Types.Location;
     type Attribute = Types.Attribute;
@@ -867,6 +938,7 @@ shared(msg) actor class NFTSale(
     system func preupgrade() {
         usersEntries := Iter.toArray(users.entries());
         tokensEntries := Iter.toArray(tokens.entries());
+        entries := Iter.toArray(users_profile.entries());
     };
 
     system func postupgrade() {
@@ -879,5 +951,6 @@ shared(msg) actor class NFTSale(
         // orders := HashMap.fromIter<Nat, OrderInfo>(ordersEntries.vals(), 1 , Nat.equal, Hash.hash);
         usersEntries := [];
         tokensEntries := [];
+        entries := [];
     };
 };
