@@ -13,7 +13,7 @@ import * as nft from "../.dfx/local/canisters/nft"
 /*
  * Some examples to get you started
  */
-import ProcessImage from "./components/ProcessImage.vue"
+import HomePage from "./views/HomePage.vue"
 
 const client = createClient({
   canisters: {
@@ -24,17 +24,40 @@ const client = createClient({
     dev: import.meta.env.DEV,
   },
 })
+
+const routing = (url) => {
+
+}
+
 </script>
 
 <template>
   <Connect2ICProvider :client="client">
     <div class="App">
-      <div class="auth-section">
-        <ConnectButton />
+      <div class="app-navbar">
+        <ul class="navbar-navx">
+            <li class="navx-item">
+                <a class="navx-link" @click="routing('/')" href="#">
+                    My trips
+                </a>
+            </li>
+            <li class="navx-item">
+                <a class="navx-link" @click="routing('/')" href="#">
+                    FAQ
+                </a>
+            </li>
+            <li class="navx-item-button">
+                <ConnectButton />
+            </li>
+        </ul>
       </div>
       <ConnectDialog />
-      <div class="examples">
-        <ProcessImage/>
+      <div class="app-header">
+      </div>
+      <div class="app-view">
+        <HomePage />
+      </div>
+      <div class="app-footer">
       </div>
     </div>
   </Connect2ICProvider>
@@ -52,16 +75,42 @@ body {
 }
 
 
-.example {
-  padding: 50px 50px;
-  min-height: 300px;
+ul {
+  padding-left: 0rem;
+  list-style-type: none;
+  margin-top: 0;
+}
+
+/* NavBar css */
+.app-navbar{
+  height: 60px;
+  width: 100%;
+}
+
+.navbar-navx{
+  height: 100%;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  /*border: 1px solid black;*/
-  /*background: #f4f4f4;*/
-  border-radius: 15px;
+  justify-content: flex-end;
+  background-color: white;
+}
+
+.navx-item{
+  height: 100%;
+  width: 100px;
+  padding: 1rem 1rem 1rem 1rem;
+}
+
+.navx-item-button{
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.navx-item .navx-link{
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #525c68;
+  text-decoration: none;
 }
 
 </style>
