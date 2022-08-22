@@ -1,10 +1,6 @@
 package mvc.backend_server.dto;
 
 import lombok.Data;
-import mvc.backend_server.dto.CityDTO;
-import mvc.backend_server.entity.BusinessTour;
-
-import javax.persistence.*;
 
 @Data
 public class POIDTO {

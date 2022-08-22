@@ -1,8 +1,10 @@
 package mvc.backend_server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,7 +34,11 @@ public class POI {
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
 
-    @ManyToOne
-    @JoinColumn(name = "day_of_week", nullable = false)
-    private BusinessTour businessTour;
+    @OneToMany(mappedBy = "startStation")
+    @JsonIgnore
+    private List<Distance> startStation;
+
+    @OneToMany(mappedBy = "endStation")
+    @JsonIgnore
+    private List<Distance> endStation;
 }
