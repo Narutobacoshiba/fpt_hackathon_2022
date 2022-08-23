@@ -27,6 +27,46 @@ public class DayOfTrip {
     private Tour tour;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "dayOfTrip")
-    @JsonIgnore
+
     private List<POIOfDay> listPOIs;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Tour getTour() {
+        return tour;
+    }
+
+    public void setTour(Tour tour) {
+        this.tour = tour;
+    }
+
+    public List<POIOfDay> getListPOIs() {
+        return listPOIs;
+    }
+
+    public void setListPOIs(List<POIOfDay> listPOIs) {
+        this.listPOIs = listPOIs;
+    }
 }

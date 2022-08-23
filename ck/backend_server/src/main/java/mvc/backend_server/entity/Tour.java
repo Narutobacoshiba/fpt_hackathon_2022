@@ -28,4 +28,44 @@ public class Tour {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour")
     private List<DayOfTrip> listDays;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public List<DayOfTrip> getListDays() {
+        return listDays;
+    }
+
+    public void setListDays(List<DayOfTrip> listDays) {
+        this.listDays = listDays;
+    }
 }

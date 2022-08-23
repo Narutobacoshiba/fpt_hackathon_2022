@@ -20,13 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         securedEnabled = true
 )
 public class AuthConfig extends WebSecurityConfigurerAdapter {
-    private final JwtRequestFilter jwtRequestFilter;
-    private final UserDetailsService userDetailService;
 
-    public AuthConfig(JwtRequestFilter jwtRequestFilter, UserDetailsService userDetailService) {
-        this.jwtRequestFilter = jwtRequestFilter;
-        this.userDetailService = userDetailService;
-    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
@@ -43,7 +37,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         super.configure(auth);
-        auth.userDetailsService(userDetailService).passwordEncoder(getPasswordEncoder());
+
     }
 
     // Authorization step
@@ -61,9 +55,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 // with this path - no need to authenticate
                 .authorizeRequests()
-                .antMatchers("/authenticate/**").permitAll()
-                .antMatchers("/account/user/**").hasAuthority("USER")
-                .antMatchers("/account/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/**").permitAll()
                 // authenticate all others request
                 .anyRequest().authenticated()
                 // if exception occur => redirect to denied page
@@ -72,6 +64,6 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // add filter (request need validated jwt to pass over the security)
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 }
