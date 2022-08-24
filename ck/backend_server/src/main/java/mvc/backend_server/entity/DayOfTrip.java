@@ -26,7 +26,7 @@ public class DayOfTrip {
     @JoinColumn(name = "tour_id", nullable = false)
     private Tour tour;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dayOfTrip")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dayOfTrip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 
     private List<POIOfDay> listPOIs;
 
