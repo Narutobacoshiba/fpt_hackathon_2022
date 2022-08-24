@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface POIRepo extends JpaRepository<POI, Integer> {
+    public POI findByPOIId(int POIId);
 }

@@ -1,10 +1,6 @@
 package mvc.backend_server.dto;
 
 import lombok.Data;
-import mvc.backend_server.entity.Account;
-import mvc.backend_server.entity.TravelService;
-
-import javax.persistence.*;
 
 @Data
 public class TicketDTO {

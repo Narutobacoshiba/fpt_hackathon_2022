@@ -1,6 +1,7 @@
 package mvc.backend_server.entity;
 
 import lombok.Data;
+import mvc.backend_server.repository.BusinessTourRepo;
 
 import javax.persistence.*;
 
@@ -30,4 +31,52 @@ public class POIOfDay {
 
     @Column(name = "end_time")
     private int endTime;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public POI getPoi() {
+        return poi;
+    }
+
+    public void setPoi(POI poi) {
+        this.poi = poi;
+    }
+
+    public DayOfTrip getDayOfTrip() {
+        return dayOfTrip;
+    }
+
+    public void setDayOfTrip(DayOfTrip dayOfTrip) {
+        this.dayOfTrip = dayOfTrip;
+    }
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(int endTime) {
+        this.endTime = endTime;
+    }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "account")
-public class Account implements UserDetails {
+public class Account  {
     String ROLE_PREFIX = "ROLE_";
 
     @Id
@@ -37,20 +37,25 @@ public class Account implements UserDetails {
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "identity_card")
-    private String identityCard;
 
     private String image;
-    private String password;
+
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "register_date")
-    private Date registerDate;
+
 
     @Column(name = "level")
     private Integer level;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     @Column(name = "level_point")
     private Integer levelPoint;
@@ -65,42 +70,28 @@ public class Account implements UserDetails {
 
     private String username;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", orphanRemoval = true)
-    @JsonIgnore
-    private List<Ticket> tickets;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", orphanRemoval = true)
-    private List<TravelerRating> ratings;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
-        System.out.println("Authority: " + role.getRoleName().toUpperCase());
-        list.add(new SimpleGrantedAuthority(role.getRoleName().toUpperCase()));
-        for (GrantedAuthority s: list) {
-            System.out.println(s);
-        }
-        return list;
+    public String getId() {
+        return id;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        if (this.getStatus() == 0) return false;
-        else return true;
+
+
+
+
+    public Integer getStatus() {
+        return status;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
+
+
 }

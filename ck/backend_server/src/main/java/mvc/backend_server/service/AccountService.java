@@ -33,43 +33,6 @@ public class AccountService implements IAccountService {
         this.mapper = mapper;
     }
 
-    @Override
-    public List<AccountDTO> getAllAccount() {
-        return accountRepo.findAll().stream()
-                .map(account -> mapper.map(account, AccountDTO.class))
-                .collect(Collectors.toList());
-    }
 
-    @Override
-    public Account saveAccount(AccountDTO accountDTO) {
-        Account account = mapper.map(accountDTO, Account.class);
-        accountRepo.save(account);
-        return account;
-    }
-
-    @Override
-    public RegisterResponse registerAccount(AccountDTO registerRequest) {
-        Account newAccount = mapper.map(registerRequest, Account.class);
-        String generateId = "User".concat(String.valueOf(accountRepo.findAll().size()+1));
-        newAccount.setId(generateId);
-        newAccount.setRegisterDate(Date.valueOf(LocalDate.now()));
-        Role role = roleRepo.getById(registerRequest.getRoleId());
-        System.out.println(role.getRoleId());
-        newAccount.setRole(role);
-        newAccount.setStatus(1);
-        accountRepo.save(newAccount);
-        RegisterResponse response = new RegisterResponse("Register successfully!");
-        return response;
-    }
-
-    public AccountDTO getAccountById(String id) {
-        Optional<Account> optAccount = accountRepo.findById(id);
-        if (optAccount.isPresent()) {
-            Account account = optAccount.get();
-            AccountDTO accountDTO = mapper.map(account, AccountDTO.class);
-            return accountDTO;
-        }
-        return null;
-    }
 
 }
