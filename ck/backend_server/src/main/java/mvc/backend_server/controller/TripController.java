@@ -4,14 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import mvc.backend_server.algorithms.GeneticAlgorithmsImplementer;
 import mvc.backend_server.dto.Data;
 import mvc.backend_server.dto.Solution;
-import mvc.backend_server.entity.DayOfTrip;
-import mvc.backend_server.entity.Distance;
-import mvc.backend_server.entity.POI;
-import mvc.backend_server.entity.Tour;
-import mvc.backend_server.repository.BusinessTourRepo;
-import mvc.backend_server.repository.DayOfTripRepo;
-import mvc.backend_server.repository.DistanceRepo;
-import mvc.backend_server.repository.POIRepo;
+import mvc.backend_server.entity.*;
+import mvc.backend_server.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -38,6 +32,8 @@ public class TripController {
     BusinessTourRepo tourRepo;
     @Autowired
     DayOfTripRepo dayOfTripRepo;
+    @Autowired
+    POIOfDayRepo poiOfDayRepo;
     @GetMapping("/generate/{startDate}/{endDate}")
     public Tour generateour(@PathVariable(required = false) String startDate, @PathVariable(required = false) String endDate) throws IOException, ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -62,7 +58,27 @@ public class TripController {
         GeneticAlgorithmsImplementer ga = new GeneticAlgorithmsImplementer(data);
         Solution s = ga.implementGA(data);
         Tour tour =s.toTour(data);
+        //tourRepo.save(tour);
+        Tour add = new Tour();
+        add.setStartDate(sDate);
+        add.setEndDate(eDate);
+         int tourid =tourRepo.save(add).getId();
+         tour.setId(tourid);
+         tour.setStartDate(sDate);
+         tour.setEndDate(eDate);
+        for(DayOfTrip day :tour.getListDays()){
+            DayOfTrip daysAdded = new DayOfTrip();
+            daysAdded.setTour(tour);
+            daysAdded.setDate(day.getDate());
+            daysAdded.setNumber(day.getNumber());
+            int dayid = dayOfTripRepo.save(daysAdded).getId();
+            day.setId(dayid);
+            for (POIOfDay poi: day.getListPOIs()) {
+                poi.setDayOfTrip(daysAdded);
 
+                poiOfDayRepo.save(poi);
+            }
+        }
         return  tour;
 
 

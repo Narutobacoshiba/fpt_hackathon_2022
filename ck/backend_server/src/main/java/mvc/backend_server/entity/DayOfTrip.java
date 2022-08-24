@@ -22,7 +22,8 @@ public class DayOfTrip {
     @Column(name = "date")
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "tour_id", nullable = false)
     private Tour tour;
 
@@ -69,4 +70,6 @@ public class DayOfTrip {
     public void setListPOIs(List<POIOfDay> listPOIs) {
         this.listPOIs = listPOIs;
     }
+
+
 }

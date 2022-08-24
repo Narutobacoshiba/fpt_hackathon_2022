@@ -22,9 +22,9 @@ public class Tour {
     @Column(name = "end_date")
     private Date endDate;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
-    private Account account;
+    //@ManyToOne
+    @Column(name = "account_id", nullable = false)
+    private String account;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<DayOfTrip> listDays;
@@ -53,11 +53,11 @@ public class Tour {
         this.endDate = endDate;
     }
 
-    public Account getAccount() {
+    public String getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(String account) {
         this.account = account;
     }
 
@@ -67,5 +67,10 @@ public class Tour {
 
     public void setListDays(List<DayOfTrip> listDays) {
         this.listDays = listDays;
+    }
+
+    public void addDay(DayOfTrip day){
+        listDays.add(day);
+        day.setTour(this);
     }
 }
