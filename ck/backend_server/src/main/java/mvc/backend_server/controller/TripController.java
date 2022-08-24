@@ -34,7 +34,7 @@ public class TripController {
     DayOfTripRepo dayOfTripRepo;
     @Autowired
     POIOfDayRepo poiOfDayRepo;
-    @GetMapping("/generate/{startDate}/{endDate}")
+    @PostMapping("/generate/{startDate}/{endDate}")
     public Tour generateour(@PathVariable(required = false) String startDate, @PathVariable(required = false) String endDate) throws IOException, ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -102,7 +102,15 @@ public class TripController {
                 day.getListPOIs().clear();
             }
             for (DayOfTrip day: tour.getListDays()){
-
+                for(POIOfDay poi : day.getListPOIs()){
+                    POIOfDay ePoi = poiOfDayRepo.findPOIOfDayById(poi.getId());
+                    ePoi.setStartTime(poi.getStartTime());
+                    ePoi.setEndTime(poi.getEndTime());
+                    ePoi.setNumber(poi.getNumber());
+                    ePoi.setPoi(poi.getPoi());
+                    ePoi.setDayOfTrip(poi.getDayOfTrip());
+                    poiOfDayRepo.save(ePoi);
+                }
             }
 
             return new ResponseEntity<>(tour, HttpStatus.OK);
