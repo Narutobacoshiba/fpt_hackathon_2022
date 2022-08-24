@@ -26,7 +26,7 @@ public class Tour {
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<DayOfTrip> listDays;
 
     public int getId() {
