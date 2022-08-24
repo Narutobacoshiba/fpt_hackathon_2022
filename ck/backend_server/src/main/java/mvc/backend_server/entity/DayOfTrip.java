@@ -28,7 +28,6 @@ public class DayOfTrip {
     private Tour tour;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "dayOfTrip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-
     private List<POIOfDay> listPOIs;
 
     public int getId() {

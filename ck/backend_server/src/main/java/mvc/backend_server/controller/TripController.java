@@ -18,6 +18,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 @RestController
@@ -83,7 +84,15 @@ public class TripController {
 
 
     }
-
+    @GetMapping("/getByAccount/{account}")
+    public ResponseEntity<ArrayList<Tour>> getTourByAccount(@PathVariable String account){
+        try {
+            ArrayList<Tour> optTour = tourRepo.getTourByAccount(account);
+            return new ResponseEntity<>(optTour, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteTour(@PathVariable int id){
         try {
