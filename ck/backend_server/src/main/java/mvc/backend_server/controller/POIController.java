@@ -1,6 +1,7 @@
 package mvc.backend_server.controller;
 
-import mvc.backend_server.entity.POI;
+import mvc.backend_server.entity.MyPOI;
+
 import mvc.backend_server.repository.POIRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ public class POIController {
     @Autowired
     private POIRepo poiRepo;
     @GetMapping("/{id}")
-    public ResponseEntity<POI> getPOIById(@PathVariable int id){
+    public ResponseEntity<MyPOI> getPOIById(@PathVariable int id){
         try {
-            Optional<POI> poi = poiRepo.findById(id);
+            Optional<MyPOI> poi = poiRepo.findById(id);
             if (!poi.isPresent()){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

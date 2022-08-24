@@ -14,29 +14,29 @@ public class Distance implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "start_station", nullable = false)
-    private POI startStation;
+    private MyPOI startStation;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "end_station", nullable = false)
-    private POI endStation;
+    private MyPOI endStation;
 
     @Column(name = "distance")
     private double distance;
 
-    public POI getStartStation() {
+    public MyPOI getStartStation() {
         return startStation;
     }
 
-    public void setStartStation(POI startStation) {
+    public void setStartStation(MyPOI startStation) {
         this.startStation = startStation;
     }
 
-    public POI getEndStation() {
+    public MyPOI getEndStation() {
         return endStation;
     }
 
-    public void setEndStation(POI endStation) {
+    public void setEndStation(MyPOI endStation) {
         this.endStation = endStation;
     }
 

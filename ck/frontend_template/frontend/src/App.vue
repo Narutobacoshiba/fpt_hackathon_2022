@@ -6,7 +6,6 @@
 // import { defaultProviders } from "@connect2ic/core/providers"
 // import { ConnectButton, ConnectDialog, Connect2ICProvider } from "@connect2ic/vue"
 // import "@connect2ic/core/style.css"
-
 /*
  * Import canister definitions like this:
  */

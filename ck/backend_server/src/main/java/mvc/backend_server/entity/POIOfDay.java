@@ -2,7 +2,6 @@ package mvc.backend_server.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import mvc.backend_server.repository.BusinessTourRepo;
 
 import javax.persistence.*;
 
@@ -21,7 +20,7 @@ public class POIOfDay {
 
     @ManyToOne
     @JoinColumn(name = "poi_id", nullable = false)
-    private POI poi;
+    private MyPOI poi;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
@@ -50,11 +49,11 @@ public class POIOfDay {
         this.number = number;
     }
 
-    public POI getPoi() {
+    public MyPOI getPoi() {
         return poi;
     }
 
-    public void setPoi(POI poi) {
+    public void setPoi(MyPOI poi) {
         this.poi = poi;
     }
 
