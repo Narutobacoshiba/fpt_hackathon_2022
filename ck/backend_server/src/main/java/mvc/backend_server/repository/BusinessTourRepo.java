@@ -15,6 +15,8 @@ import java.util.List;
 @Repository
 public interface BusinessTourRepo extends JpaRepository<Tour, Integer> {
 
-    @Query("select t.listDays from Tour t where t.account = :Account")
-    ArrayList<Tour> getTourByAccount(String Account);
+
+    ArrayList<Tour> getToursByAccount(String Account);
+    Tour getTourById(int id);
+
 }

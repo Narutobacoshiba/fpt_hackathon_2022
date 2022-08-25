@@ -9,6 +9,7 @@ import mvc.backend_server.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
@@ -63,10 +64,13 @@ public class TripController {
         Tour add = new Tour();
         add.setStartDate(sDate);
         add.setEndDate(eDate);
+        add.setAccount("test");
          int tourid =tourRepo.save(add).getId();
          tour.setId(tourid);
          tour.setStartDate(sDate);
          tour.setEndDate(eDate);
+        tour.setAccount("test");
+
         for(DayOfTrip day :tour.getListDays()){
             DayOfTrip daysAdded = new DayOfTrip();
             daysAdded.setTour(tour);
@@ -86,12 +90,16 @@ public class TripController {
     }
     @GetMapping("/getByAccount/{account}")
     public ResponseEntity<ArrayList<Tour>> getTourByAccount(@PathVariable String account){
-        try {
-            ArrayList<Tour> optTour = tourRepo.getTourByAccount(account);
+
+            ArrayList<Tour> optTour = tourRepo.getToursByAccount(account);
             return new ResponseEntity<>(optTour, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+    }
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<Tour> getTourByAccount(@PathVariable int id){
+        Tour optTour = tourRepo.getTourById(id);
+        return new ResponseEntity<>(optTour, HttpStatus.OK);
+
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteTour(@PathVariable int id){
@@ -105,11 +113,14 @@ public class TripController {
 
     @PutMapping()
     public ResponseEntity<Tour> updateTour(@RequestBody Tour tour){
-        try {
-            Tour oldTour = tourRepo.findById(tour.getId()).get();
+            int id = tour.getId();
+            Tour oldTour = tourRepo.getTourById(id);
+            int n =5;
             for (DayOfTrip day:oldTour.getListDays()) {
                 day.getListPOIs().clear();
+                tourRepo.save(oldTour);
             }
+    
             for (DayOfTrip day: tour.getListDays()){
                 for(POIOfDay poi : day.getListPOIs()){
                     POIOfDay ePoi = poiOfDayRepo.findPOIOfDayById(poi.getId());
@@ -123,8 +134,6 @@ public class TripController {
             }
 
             return new ResponseEntity<>(tour, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
     }
 }

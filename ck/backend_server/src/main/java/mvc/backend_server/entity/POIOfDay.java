@@ -1,5 +1,6 @@
 package mvc.backend_server.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import mvc.backend_server.repository.BusinessTourRepo;
@@ -25,6 +26,7 @@ public class POIOfDay {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
+
     @JoinColumn(name = "day_id", nullable = false)
     private DayOfTrip dayOfTrip;
 
