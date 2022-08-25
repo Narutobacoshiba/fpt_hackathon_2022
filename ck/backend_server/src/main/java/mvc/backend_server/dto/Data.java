@@ -1,15 +1,7 @@
 package mvc.backend_server.dto;
 
-import mvc.backend_server.entity.Distance;
-import mvc.backend_server.entity.POI;
-import mvc.backend_server.repository.DistanceRepo;
-import mvc.backend_server.repository.POIRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import mvc.backend_server.entity.MyPOI;
 
-import javax.annotation.PostConstruct;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +12,7 @@ public class Data {
 
     public int numberOfPOI;
     public int dayOfTrip;
-    public POI[] POIs;
+    public MyPOI[] POIs;
     public double distanceOfPOI[][];
     public double maxHappiness;
     public double minHappiness;
@@ -40,7 +32,7 @@ public class Data {
     public double w3;
     public double w4;
 
-    public Data(Date _startDate, Date _endDate, double _distanceOfPOI[][], POI[] _POIs,int _numberOfPOI){
+    public Data(Date _startDate, Date _endDate, double _distanceOfPOI[][], MyPOI[] _POIs,int _numberOfPOI){
         this.startDate=_startDate;
         this.endDate =_endDate;
         this.numberOfPOI = _numberOfPOI;

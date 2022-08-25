@@ -152,6 +152,14 @@ var plan_param = ref({
     end_date: null
 })
 
+const planning = async () => {
+        try{
+            let res = await PlanServices.createPlan(plan_param)
+            console.log("res: " + res)
+        }catch(error){
+            console.log(error)
+        }
+}
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {

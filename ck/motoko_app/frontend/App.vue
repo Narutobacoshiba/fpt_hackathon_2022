@@ -14,6 +14,7 @@ import * as nft from "../.dfx/local/canisters/nft"
  * Some examples to get you started
  */
 import HomePage from "./views/HomePage.vue"
+import TripPage from "./views/TripPage.vue"
 
 const client = createClient({
   canisters: {
@@ -32,44 +33,43 @@ const routing = (url) => {
 </script>
 
 <template>
-  <div class="App">
-    <div class="app-navbar">
-      <ul class="navbar-navx">
-        <li>
-          
-        </li>
-        <li class="navx-item">
-          <a class="navx-link" @click="routing('/')" href="#">
-            My trips
-          </a>
-        </li>
-        <li class="navx-item">
-          <a class="navx-link" @click="routing('/')" href="#">
-            FAQ
-          </a>
-        </li>
-        <li class="navx-item-button">
-          <ConnectButton />
-        </li>
-      </ul>
+  <Connect2ICProvider :client="client">
+    <div class="App">
+      <div class="app-navbar">
+        <ul class="navbar-navx">
+            <li class="navx-item">
+                <a class="navx-link" @click="routing('/')" href="#">
+                    My trips
+                </a>
+            </li>
+            <li class="navx-item">
+                <a class="navx-link" @click="routing('/')" href="#">
+                    FAQ
+                </a>
+            </li>
+            <li class="navx-item-button">
+                <ConnectButton />
+            </li>
+        </ul>
+      </div>
+      <ConnectDialog />
+      <div class="app-header">
+      </div>
+      <div class="app-view">
+        <TripPage />
+      </div>
+      <div class="app-footer">
+      </div>
     </div>
-    <ConnectDialog />
-    <div class="app-header">
-    </div>
-    <div class="app-view">
-      <HomePage />
-    </div>
-    <div class="app-footer">
-    </div>
-  </div>
+  </Connect2ICProvider>
 </template>
 
 <style>
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #424242;
@@ -122,4 +122,5 @@ ul {
   color: #525c68;
   text-decoration: none;
 }
+
 </style>

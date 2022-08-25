@@ -4,10 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import mvc.backend_server.algorithms.GeneticAlgorithmsImplementer;
 import mvc.backend_server.dto.Data;
 import mvc.backend_server.dto.Solution;
+
+import mvc.backend_server.dto.TripGenerateDTO;
 import mvc.backend_server.entity.*;
 import mvc.backend_server.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,23 +34,31 @@ public class TripController {
     POIRepo poiRepo;
     @Autowired
     DistanceRepo distanceRepo;
+
     @Autowired
     BusinessTourRepo tourRepo;
     @Autowired
     DayOfTripRepo dayOfTripRepo;
     @Autowired
     POIOfDayRepo poiOfDayRepo;
-    @PostMapping("/generate/{startDate}/{endDate}")
-    public Tour generateour(@PathVariable(required = false) String startDate, @PathVariable(required = false) String endDate) throws IOException, ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        java.util.Date parsed = format.parse(startDate);
+    @PostMapping("/generate")
+    public Tour generateour(@RequestBody TripGenerateDTO tripGenerateDTO) throws IOException, ParseException {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("----------");
+        System.out.println(tripGenerateDTO.getStartDate());
+        System.out.println(tripGenerateDTO.getEndDate());
+        System.out.println(tripGenerateDTO.getBudget());
+        System.out.println(tripGenerateDTO.getDestination());
+        System.out.println(tripGenerateDTO.getWalletId());
+        java.util.Date parsed = format.parse(tripGenerateDTO.getStartDate());
         Date sDate = new Date(parsed.getTime());
-        parsed = format.parse(endDate);
+        parsed = format.parse(tripGenerateDTO.getEndDate());
         Date eDate = new Date(parsed.getTime());
-        ArrayList<POI> listPoi= (ArrayList<POI>) poiRepo.findAll();
+        ArrayList<MyPOI> listPoi= (ArrayList<MyPOI>) poiRepo.findAll();
         int numberOfPOI = listPoi.size();
-        POI[] POIs = new POI[numberOfPOI];
+        MyPOI[] POIs = new MyPOI[numberOfPOI];
         for(int i=0;i<listPoi.size();i++){
             POIs[i] = listPoi.get(i);
         }
@@ -59,17 +71,21 @@ public class TripController {
 
         GeneticAlgorithmsImplementer ga = new GeneticAlgorithmsImplementer(data);
         Solution s = ga.implementGA(data);
+
         Tour tour =s.toTour(data);
         //tourRepo.save(tour);
         Tour add = new Tour();
         add.setStartDate(sDate);
         add.setEndDate(eDate);
-        add.setAccount("test");
+
+        add.setAccount(tripGenerateDTO.getWalletId());
+
          int tourid =tourRepo.save(add).getId();
          tour.setId(tourid);
          tour.setStartDate(sDate);
          tour.setEndDate(eDate);
-        tour.setAccount("test");
+
+         tour.setAccount(tripGenerateDTO.getWalletId());
 
         for(DayOfTrip day :tour.getListDays()){
             DayOfTrip daysAdded = new DayOfTrip();
@@ -84,7 +100,11 @@ public class TripController {
                 poiOfDayRepo.save(poi);
             }
         }
-        return  tour;
+
+
+
+        return tour;
+
 
 
     }
@@ -101,7 +121,7 @@ public class TripController {
         return new ResponseEntity<>(optTour, HttpStatus.OK);
 
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteTour(@PathVariable int id){
         try {
             tourRepo.deleteById(id);

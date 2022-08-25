@@ -170,7 +170,7 @@ public class GeneticAlgorithmsImplementer {
             fullTrip.add(getNum(poiList));
         }
         while (fullTrip.size() > 0) {
-            //double predict = Double.max(time + data.D[current][fullTrip.get(0)] * 90, data.POI[fullTrip.get(0)].getStart()) + data.POI[fullTrip.get(0)].getDuration();
+            //double predict = Double.max(time + data.D[current][fullTrip.get(0)] * 90, data.MyPOI[fullTrip.get(0)].getStart()) + data.MyPOI[fullTrip.get(0)].getDuration();
             if (Double.max(time + data.distanceOfPOI[current][fullTrip.get(0)] * 90, data.POIs[fullTrip.get(0)].getOpenTime()) + data.POIs[fullTrip.get(0)].getDuration() < data.dailyEndTime[tripNumber]
                     && cost + data.POIs[fullTrip.get(0)].getPrice() < data.dailyBudget[tripNumber]) {
                 time = Double.max(time + data.distanceOfPOI[current][fullTrip.get(0)] * 90, data.POIs[fullTrip.get(0)].getOpenTime()) + data.POIs[fullTrip.get(0)].getDuration();
@@ -194,7 +194,7 @@ public class GeneticAlgorithmsImplementer {
             int currentPOI = fullTrip.get(0);
             fullTrip.remove(0);
             while (fullTrip.size() > 0) {
-                //double predict = Double.max(newTime + data.D[currentPOI][fullTrip.get(0)] * 90, data.POI[fullTrip.get(0)].getStart()) + data.POI[fullTrip.get(0)].getDuration();
+                //double predict = Double.max(newTime + data.D[currentPOI][fullTrip.get(0)] * 90, data.MyPOI[fullTrip.get(0)].getStart()) + data.MyPOI[fullTrip.get(0)].getDuration();
                 if (Double.max(newTime + data.distanceOfPOI[currentPOI][fullTrip.get(0)] * 90, data.POIs[fullTrip.get(0)].getOpenTime()) + data.POIs[fullTrip.get(0)].getDuration() < data.dailyEndTime[i]
                         && newCost + data.POIs[fullTrip.get(0)].getPrice() < data.dailyBudget[i]) {
                     newTime = Double.max(newTime + data.distanceOfPOI[currentPOI][fullTrip.get(0)] * 90, data.POIs[fullTrip.get(0)].getOpenTime()) + data.POIs[fullTrip.get(0)].getDuration();

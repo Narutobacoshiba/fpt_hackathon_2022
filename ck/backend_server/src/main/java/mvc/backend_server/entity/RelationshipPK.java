@@ -5,10 +5,10 @@ import java.util.Objects;
 
 public class RelationshipPK implements Serializable {
 
-    private POI startStation;
-    private  POI endStation;
+    private MyPOI startStation;
+    private  MyPOI endStation;
 
-    public RelationshipPK(POI startStation, POI endStation) {
+    public RelationshipPK(MyPOI startStation, MyPOI endStation) {
         this.startStation = startStation;
         this.endStation = endStation;
     }
