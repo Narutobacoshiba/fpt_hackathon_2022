@@ -1,61 +1,50 @@
 import type { Principal } from '@dfinity/principal';
+import type { ActorMethod } from '@dfinity/agent';
+
 export type Errors = { 'Unauthorized' : null } |
   { 'TokenNotExist' : null } |
   { 'InvalidOperator' : null };
 export type MintResult = { 'Ok' : [bigint, bigint] } |
   { 'Err' : Errors };
 export interface NFTSale {
-  'approve' : (arg_0: bigint, arg_1: Principal) => Promise<TxReceipt>,
-  'balanceOf' : (arg_0: Principal) => Promise<bigint>,
-  'batchMint' : (
-      arg_0: Principal,
-      arg_1: Array<[] | [TokenMetadata]>,
-    ) => Promise<MintResult>,
-  'batchSetTokenMetadata' : (arg_0: Array<[bigint, TokenMetadata]>) => Promise<
-      TxReceipt
-    >,
-  'batchTransferFrom' : (
-      arg_0: Principal,
-      arg_1: Principal,
-      arg_2: Array<bigint>,
-    ) => Promise<TxReceipt>,
-  'burn' : (arg_0: bigint) => Promise<TxReceipt>,
-  'getAllTokens' : () => Promise<Array<TokenInfoExt>>,
-  'getOperator' : (arg_0: bigint) => Promise<Principal>,
-  'getPrincipal' : () => Promise<Principal>,
-  'getTokenInfo' : (arg_0: bigint) => Promise<TokenInfoExt>,
-  'getTransaction' : (arg_0: bigint) => Promise<TxRecord>,
-  'getTransactions' : (arg_0: bigint, arg_1: bigint) => Promise<
-      Array<TxRecord>
-    >,
-  'getUserInfo' : (arg_0: Principal) => Promise<UserInfoExt>,
-  'getUserTokens' : (arg_0: Principal) => Promise<Array<TokenInfoExt>>,
-  'getUserTransactionAmount' : (arg_0: Principal) => Promise<bigint>,
-  'getUserTransactions' : (
-      arg_0: Principal,
-      arg_1: bigint,
-      arg_2: bigint,
-    ) => Promise<Array<TxRecord>>,
-  'historySize' : () => Promise<bigint>,
-  'isApprovedForAll' : (arg_0: Principal, arg_1: Principal) => Promise<boolean>,
-  'mint' : (arg_0: Principal, arg_1: [] | [TokenMetadata]) => Promise<
-      MintResult
-    >,
-  'ownerOf' : (arg_0: bigint) => Promise<Principal>,
-  'setApprovalForAll' : (arg_0: Principal, arg_1: boolean) => Promise<
-      TxReceipt
-    >,
-  'setOwner' : (arg_0: Principal) => Promise<Principal>,
-  'setTokenMetadata' : (arg_0: bigint, arg_1: TokenMetadata) => Promise<
-      TxReceipt
-    >,
-  'totalSupply' : () => Promise<bigint>,
-  'transfer' : (arg_0: Principal, arg_1: bigint) => Promise<TxReceipt>,
-  'transferFrom' : (
-      arg_0: Principal,
-      arg_1: Principal,
-      arg_2: bigint,
-    ) => Promise<TxReceipt>,
+  'approve' : ActorMethod<[bigint, Principal], TxReceipt>,
+  'balanceOf' : ActorMethod<[Principal], bigint>,
+  'batchMint' : ActorMethod<
+    [Principal, Array<[] | [TokenMetadata]>],
+    MintResult,
+  >,
+  'batchSetTokenMetadata' : ActorMethod<
+    [Array<[bigint, TokenMetadata]>],
+    TxReceipt,
+  >,
+  'batchTransferFrom' : ActorMethod<
+    [Principal, Principal, Array<bigint>],
+    TxReceipt,
+  >,
+  'burn' : ActorMethod<[bigint], TxReceipt>,
+  'getAllTokens' : ActorMethod<[], Array<TokenInfoExt>>,
+  'getOperator' : ActorMethod<[bigint], Principal>,
+  'getPrincipal' : ActorMethod<[], Principal>,
+  'getTokenInfo' : ActorMethod<[bigint], TokenInfoExt>,
+  'getTransaction' : ActorMethod<[bigint], TxRecord>,
+  'getTransactions' : ActorMethod<[bigint, bigint], Array<TxRecord>>,
+  'getUserInfo' : ActorMethod<[Principal], UserInfoExt>,
+  'getUserTokens' : ActorMethod<[Principal], Array<TokenInfoExt>>,
+  'getUserTransactionAmount' : ActorMethod<[Principal], bigint>,
+  'getUserTransactions' : ActorMethod<
+    [Principal, bigint, bigint],
+    Array<TxRecord>,
+  >,
+  'historySize' : ActorMethod<[], bigint>,
+  'isApprovedForAll' : ActorMethod<[Principal, Principal], boolean>,
+  'mint' : ActorMethod<[Principal, [] | [TokenMetadata]], MintResult>,
+  'ownerOf' : ActorMethod<[bigint], Principal>,
+  'setApprovalForAll' : ActorMethod<[Principal, boolean], TxReceipt>,
+  'setOwner' : ActorMethod<[Principal], Principal>,
+  'setTokenMetadata' : ActorMethod<[bigint, TokenMetadata], TxReceipt>,
+  'totalSupply' : ActorMethod<[], bigint>,
+  'transfer' : ActorMethod<[Principal, bigint], TxReceipt>,
+  'transferFrom' : ActorMethod<[Principal, Principal, bigint], TxReceipt>,
 }
 export type Operation = { 'transferFrom' : null } |
   { 'burn' : null } |

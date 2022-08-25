@@ -71,14 +71,21 @@ export default defineConfig({
     fs: {
       allow: ["."],
     },
-    proxy: {
+    proxy:{
       // This proxies all http requests made to /api to our running dfx instance
       "/api": {
         target: `http://0.0.0.0:${DFX_PORT}`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "/api"),
       },
-    },
+      "^/bapi": {
+        target: "http://127.0.0.1:8080",
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: (path) => path.replace(/^\/bapi/, ""),
+      }
+    }, 
+    
   },
   define: {
     // Here we can define global constants
