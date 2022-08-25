@@ -14,6 +14,7 @@ import * as nft from "../.dfx/local/canisters/nft"
  * Some examples to get you started
  */
 import HomePage from "./views/HomePage.vue"
+import TripPage from "./views/TripPage.vue"
 
 const client = createClient({
   canisters: {
@@ -55,7 +56,7 @@ const routing = (url) => {
       <div class="app-header">
       </div>
       <div class="app-view">
-        <HomePage />
+        <TripPage />
       </div>
       <div class="app-footer">
       </div>
