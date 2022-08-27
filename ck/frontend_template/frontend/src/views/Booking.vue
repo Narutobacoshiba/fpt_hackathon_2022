@@ -1,5 +1,6 @@
 <template>
-    <div class="b-background">
+    <div>
+        <div class="b-background">
         <img src="../assets/image/background_booking.png" />
         <div class="b-background-content">
             <h1>Find your next stay</h1>
@@ -165,6 +166,7 @@
         <div class="footer">
             footer
         </div>
+    </div>
     </div>
 </template>
 
