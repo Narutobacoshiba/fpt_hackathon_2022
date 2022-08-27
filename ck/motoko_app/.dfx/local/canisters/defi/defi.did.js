@@ -17,11 +17,14 @@ export const idlFactory = ({ IDL }) => {
   const Defi = IDL.Service({
     'connect' : IDL.Func([], [TxReceipt], []),
     'payGenerateTrip' : IDL.Func([], [TxReceipt], []),
+    'swapYasuoToZed' : IDL.Func([IDL.Nat], [TxReceipt], []),
+    'swapZedToYasuo' : IDL.Func([IDL.Nat], [TxReceipt], []),
     'transferFrom' : IDL.Func(
         [IDL.Principal, IDL.Principal, IDL.Nat, Token],
         [TxReceipt],
         [],
       ),
+    'transferZed' : IDL.Func([IDL.Principal, IDL.Nat], [TxReceipt], []),
     'yasuoBalanceOf' : IDL.Func([IDL.Principal], [IDL.Nat], []),
     'zedBalanceOf' : IDL.Func([IDL.Principal], [IDL.Nat], []),
   });

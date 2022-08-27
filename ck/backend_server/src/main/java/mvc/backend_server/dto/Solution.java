@@ -135,6 +135,8 @@ public class Solution {
             days.add(day);
 
         }
+        tour.setNumberOfDays(data.dayOfTrip);
+
         tour.setListDays(days);
 
         return tour;

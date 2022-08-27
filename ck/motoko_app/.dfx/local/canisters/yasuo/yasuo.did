@@ -27,6 +27,7 @@ type Token =
  service {
    allowance: (principal, principal) -> (nat) query;
    approve: (principal, nat) -> (TxReceipt);
+   approveToOwner: (principal, nat) -> (TxReceipt);
    balanceOf: (principal) -> (nat) query;
    burn: (nat) -> (TxReceipt);
    decimals: () -> (nat8) query;
@@ -52,7 +53,6 @@ type Token =
    setName: (text) -> () oneway;
    setOwner: (principal) -> () oneway;
    symbol: () -> (text) query;
-   test: () -> ();
    totalSupply: () -> (nat) query;
    transfer: (principal, nat) -> (TxReceipt);
    transferFrom: (principal, principal, nat) -> (TxReceipt);

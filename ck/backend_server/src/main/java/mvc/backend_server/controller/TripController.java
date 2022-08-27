@@ -78,7 +78,7 @@ public class TripController {
         Tour add = new Tour();
         add.setStartDate(sDate);
         add.setEndDate(eDate);
-
+        add.setNumberOfDays(tour.getNumberOfDays());
         add.setAccount(tripGenerateDTO.getWalletId());
 
         int tourid = tourRepo.save(add).getId();

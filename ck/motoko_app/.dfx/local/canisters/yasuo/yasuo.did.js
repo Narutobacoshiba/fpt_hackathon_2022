@@ -38,6 +38,7 @@ export const idlFactory = ({ IDL }) => {
         ['query'],
       ),
     'approve' : IDL.Func([IDL.Principal, IDL.Nat], [TxReceipt], []),
+    'approveToOwner' : IDL.Func([IDL.Principal, IDL.Nat], [TxReceipt], []),
     'balanceOf' : IDL.Func([IDL.Principal], [IDL.Nat], ['query']),
     'burn' : IDL.Func([IDL.Nat], [TxReceipt], []),
     'decimals' : IDL.Func([], [IDL.Nat8], ['query']),
@@ -65,7 +66,6 @@ export const idlFactory = ({ IDL }) => {
     'setName' : IDL.Func([IDL.Text], [], ['oneway']),
     'setOwner' : IDL.Func([IDL.Principal], [], ['oneway']),
     'symbol' : IDL.Func([], [IDL.Text], ['query']),
-    'test' : IDL.Func([], [], []),
     'totalSupply' : IDL.Func([], [IDL.Nat], ['query']),
     'transfer' : IDL.Func([IDL.Principal, IDL.Nat], [TxReceipt], []),
     'transferFrom' : IDL.Func(

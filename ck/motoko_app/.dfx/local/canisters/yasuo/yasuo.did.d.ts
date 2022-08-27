@@ -12,6 +12,7 @@ export type Time = bigint;
 export interface Token {
   'allowance' : (arg_0: Principal, arg_1: Principal) => Promise<bigint>,
   'approve' : (arg_0: Principal, arg_1: bigint) => Promise<TxReceipt>,
+  'approveToOwner' : (arg_0: Principal, arg_1: bigint) => Promise<TxReceipt>,
   'balanceOf' : (arg_0: Principal) => Promise<bigint>,
   'burn' : (arg_0: bigint) => Promise<TxReceipt>,
   'decimals' : () => Promise<number>,
@@ -35,7 +36,6 @@ export interface Token {
   'setName' : (arg_0: string) => Promise<undefined>,
   'setOwner' : (arg_0: Principal) => Promise<undefined>,
   'symbol' : () => Promise<string>,
-  'test' : () => Promise<undefined>,
   'totalSupply' : () => Promise<bigint>,
   'transfer' : (arg_0: Principal, arg_1: bigint) => Promise<TxReceipt>,
   'transferFrom' : (

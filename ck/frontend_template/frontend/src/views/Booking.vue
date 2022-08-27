@@ -172,7 +172,6 @@
 
 <script setup>
 import { ref } from "@vue/reactivity"
-import '../assets/css/booking.css'
 
 let adults = 4
 let children = 3

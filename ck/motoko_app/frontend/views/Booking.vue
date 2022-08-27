@@ -1,160 +1,172 @@
 <template>
     <div>
         <div class="b-background">
-            <img src="../assets/image/background_booking.png" />
-            <div class="b-background-content">
-                <h1>Find your next stay</h1>
-                <p>Search low prices on hotels, homes and much more...</p>
-            </div>
+        <img src="../assets/image/background_booking.png" />
+        <div class="b-background-content">
+            <h1>Find your next stay</h1>
+            <p>Search low prices on hotels, homes and much more...</p>
         </div>
-        <div class="b-app-navbar">
-            <ul class="b-navbar">
-                <li class="b-nav-item">
-                    <!-- <label for="location-search">Name</label> -->
-                    <input class="search-destination-input" type="search" placeholder="Location or hotel name"
-                        id="location-search" />
-                </li>
-                <li class="b-nav-item">
-                    <input class="date-input" type="date" /> - <input class="date-input" type="date" />
-                </li>
-                <li class="b-nav-item">
-                    <button @click="() => TogglePopup('buttonTrigger')" class="b-nav-item-button-1">{{ adults }} adults
-                        - {{
-                                children
-                        }} children - {{ rooms }} rooms</button>
-                </li>
-                <li class="b-nav-item">
-                    <button class="b-nav-item-button-2">Find</button>
-                </li>
-                <!-- <li class="b-nav-item-button">
+    </div>
+    <div class="b-app-navbar">
+        <ul class="b-navbar">
+            <li class="b-nav-item">
+                <!-- <label for="location-search">Name</label> -->
+                <input class="search-destination-input" type="search" placeholder="Location or hotel name"
+                    id="location-search" />
+            </li>
+            <li class="b-nav-item">
+                <input class="date-input" type="date" /> - <input class="date-input" type="date" />
+            </li>
+            <li class="b-nav-item">
+                <button @click="() => TogglePopup('buttonTrigger')" class="b-nav-item-button-1">{{ adults }} adults - {{
+                        children
+                }} children - {{ rooms }} rooms</button>
+            </li>
+            <li class="b-nav-item">
+                <button class="b-nav-item-button-2">Find</button>
+            </li>
+            <!-- <li class="b-nav-item-button">
                 <ConnectButton />
             </li> -->
-            </ul>
-            <div class="popup" v-if="popupTriggers.buttonTrigger" :TogglePopup="() => TogglePopup('buttonTrigger')">
-                Say hello to my friend Golde
-                <div class="popup-inner">
-                    <button class="popup-close" @click="() => TogglePopup('buttonTrigger')">Close</button>
+        </ul>
+    </div>
+    <div class="book-image">
+        <div id="main-image">
+            <img src="https://khachsantaythi.com.vn/wp-content/uploads/2019/05/DSCF4744-1024x683.jpg" />
+        </div>
+        <div id="sub-image">
+            <img src="https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg" />
+            <img src="https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg" />
+            <img src="https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg" />
+        </div>
+    </div>
+    <div class="hotel-main-body">
+        <div class="hotel-h-item">
+            <div class="hotel-h-item-up">
+                <div class="hotel-item-up-hl">
+                    <div class="hiu-header">Resort Novotel</div>
+                    <div class="hiu-rating">
+                        <div class="hiu-star">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+                        <div class="hiu-score">
+                            4.1
+                        </div>
+                    </div>
+                    <div class="hm-text-light">
+                        90. 19 Alley of Ly Thuong Kiet street, Phan Chu Trinh ward. Hoan Kiem district, Hanoi city
+                    </div>
+                </div>
+                <div class="hotel-item-up-hr">
+                    <div class="hm-text-light">
+                        Price range from
+                    </div>
+                    <div class="hm-text-light">
+                        <span style="font-size: 30px;">1.699.200 VND</span>/night
+                    </div>
+                    <div class="hm-button">
+                        <a href="#list-room"><button> BOOK A ROOM</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="hotel-h-item-down">
+                <div class="hm-text-bold">
+                    Hotel Amenities
+                </div>
+                <div class="hm-row">
+                    <div class="hiu-symbol-1">
+                        <span><i class="fa-solid fa-wifi"></i> - Wifi</span>
+                    </div>
+                    <div class="hiu-symbol">
+                        <span><i class="fa-solid fa-house"></i> - Family rooms</span>
+                    </div>
+                    <div class="hiu-symbol">
+                        <span><i class="fa-solid fa-p"></i> - Free Parking</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="book-image">
-            <div id="main-image">
-                <img src="https://khachsantaythi.com.vn/wp-content/uploads/2019/05/DSCF4744-1024x683.jpg" />
-            </div>
-            <div id="sub-image">
-                <img src="https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg" />
-                <img src="https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg" />
-                <img src="https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg" />
-            </div>
-        </div>
-        <div class="hotel-main-body">
-            <div class="hotel-h-item">
-                <div class="hotel-h-item-up">
-                    <div class="hotel-item-up-hl">
-                        <div class="hiu-header">Resort Novotel</div>
-                        <div class="hiu-rating">
-                            <div class="hiu-star">
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                            <div class="hiu-score">
-                                4.1
-                            </div>
-                        </div>
-                        <div class="hm-text-light">
-                            90. 19 Alley of Ly Thuong Kiet street, Phan Chu Trinh ward. Hoan Kiem district, Hanoi city
-                        </div>
-                    </div>
-                    <div class="hotel-item-up-hr">
-                        <div class="hm-text-light">
-                            Price range from
-                        </div>
-                        <div class="hm-text-light">
-                            <span style="font-size: 30px;">1.699.200 VND</span>/night
-                        </div>
-                        <div class="hm-button">
-                            <button> BOOK A ROOM</button>
-                        </div>
-                    </div>
+        <div id="list-room" class="hotel-h-item-b">
+            <div class="hotel-h-item-room">
+                <div class="hotel-item-room-name">
+                    Delux Room
                 </div>
-                <div class="hotel-h-item-down">
-                    <div class="hm-text-bold">
-                        Hotel Amenities
-                    </div>
-                    <div class="hm-row">
-                        <div class="hiu-symbol-1">
-                            <span><i class="fa-solid fa-wifi"></i> - Wifi</span>
-                        </div>
-                        <div class="hiu-symbol">
-                            <span><i class="fa-solid fa-house"></i> - Family rooms</span>
-                        </div>
-                        <div class="hiu-symbol">
-                            <span><i class="fa-solid fa-p"></i> - Free Parking</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hotel-h-item-b">
-                <div class="hotel-h-item-room">
-                    <div class="hotel-item-room-name">
-                        Delux Room
-                    </div>
-                    <div class="hotel-item-room-h">
-                        <div class="hotel-item-room-hl">
-                            <img width="300" height="200"
-                                src="https://khachsantaythi.com.vn/wp-content/uploads/2019/05/DSCF4744-1024x683.jpg" />
-                            <div class="hiu-symbol">
-                                <span><i class="fa-solid fa-house"></i> - 40m2</span>
-                            </div>
-                            <div class="hiu-symbol">
-                                <span><i class="fa-solid fa-bed"></i> - 2 singles bed</span>
-                            </div>
-                            <div class="hiu-symbol">
-                                <span><i class="fa-solid fa-wifi"></i> - Wifi</span>
-                            </div>
-                            <div class="hiu-symbol">
-                                <span><i class="fa-solid fa-circle-plus"></i> View more</span>
-                            </div>
-                        </div>
-                        <div class="hotel-item-room-hr">
-                            <div class="hotel-item-room-card-up">
-                                <div class="hirc-u-header">Benefits</div>
-                                <div class="hiu-symbol">
-                                    <span><i class="fa-solid fa-circle-check"></i> Breakfast included</span>
-                                </div>
-                            </div>
-                            <div class="hotel-item-room-card-dowm">
-                                <div class="hirc-d-item">
-                                    <div class="hm-text-light">
-                                        <span style="font-size: 30px;">1.899.000 VND</span>/night
-                                    </div>
-                                    <div class="hm-button-t">
-                                        <button> BOOK NOW</button>
-                                    </div>
-                                </div>
-                                <div class="hirc-d-text">
-                                    The above prices include taxes and fees
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hotel-h-item-b">
-                <div class="hotel-h-item-room">
-                    <div class="hotel-item-room-name">
-                        Delux Room
-                    </div>
+                <div class="hotel-item-room-h">
                     <div class="hotel-item-room-hl">
                         <img width="300" height="200"
                             src="https://khachsantaythi.com.vn/wp-content/uploads/2019/05/DSCF4744-1024x683.jpg" />
+                        <div class="hiu-symbol">
+                            <span><i class="fa-solid fa-house"></i> - 40m2</span>
+                        </div>
+                        <div class="hiu-symbol">
+                            <span><i class="fa-solid fa-bed"></i> - 2 singles bed</span>
+                        </div>
+                        <div class="hiu-symbol">
+                            <span><i class="fa-solid fa-wifi"></i> - Wifi</span>
+                        </div>
+                        <div class="hiu-symbol">
+                            <span><i class="fa-solid fa-circle-plus"></i> View more</span>
+                        </div>
+                    </div>
+                    <div class="hotel-item-room-hr">
+                        <div class="hotel-item-room-card-up">
+                            <div class="hirc-u-header">Benefits</div>
+                            <div class="hiu-symbol">
+                                <span><i class="fa-solid fa-circle-check"></i> Breakfast included</span>
+                            </div>
+                        </div>
+                        <div class="hotel-item-room-card-dowm">
+                            <div class="hirc-d-item">
+                                <div class="hm-text-light">
+                                    <span style="font-size: 30px;">1.899.000 VND</span>/night
+                                </div>
+                                <div class="hm-button-t">
+                                    <input class="modal-btn" type="checkbox" id="modal-btn" name="modal-btn" />
+                                    <label for="modal-btn"> BOOK NOW </label>
+                                    <div class="modal">
+                                        <div class="modal-wrap">
+                                            <div class="pc-action-a2">
+                                                <h2>Booking Room</h2>
+                                                <div class="aa-sitem">
+                                                    <label class="aa-stext">Start date</label>
+                                                    <input type="datetime-local"
+                                                        class="aa-sinput">
+                                                </div>
+                                                <div class="aa-sitem">
+                                                    <label class="aa-stext">End date</label>
+                                                    <input type="datetime-local" class="aa-sinput">
+                                                </div>
+                                                <div class="aa-sbutton">
+                                                    <button> Book now!</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hirc-d-text">
+                                The above prices include taxes and fees
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="popup" v-if="popupTriggers.buttonTrigger" :TogglePopup="() => TogglePopup('buttonTrigger')">
+            Say hello to my friend Golde
+            <div class="popup-inner">
+                <button class="popup-close" @click="() => TogglePopup('buttonTrigger')">Close</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            footer
+        </div>
+    </div>
     </div>
 </template>
 
@@ -167,6 +179,7 @@ let rooms = 100
 
 const popupTriggers = ref({
     buttonTrigger: false,
+    bookingButtonTrgigger: false,
 })
 
 const TogglePopup = (trigger) => {
@@ -177,6 +190,16 @@ const TogglePopup = (trigger) => {
 
 
 <style scoped>
+html {
+    scroll-behavior: smooth;
+}
+
+.modal-wrap {
+    width: 500px;
+    height: 500px;
+    z-index: 10000;
+}
+
 /* NavBar css */
 .b-app-navbar {
     height: 80px;
@@ -296,6 +319,7 @@ const TogglePopup = (trigger) => {
     z-index: 300;
     top: 48%;
     left: 50%;
+    transition: opacity 2s 2s ease, transform 2s 2s ease, background-color 2s linear, color 2s linear;
 }
 
 .popup .popup-inner {
@@ -482,47 +506,251 @@ const TogglePopup = (trigger) => {
     font-size: 25px;
 }
 
-.hotel-item-room-h {
+.hotel-item-room-h{
     display: flex;
 }
-
 .hotel-item-room-hl {
     width: 30%;
 }
-
-.hotel-item-room-hr {
+.hotel-item-room-hr{
     width: 70%;
     border: 1px solid rgba(0, 0, 0, .15);
     border-radius: 8px;
 }
 
-.hotel-item-room-card-up {
+.hotel-item-room-card-up{
     border-bottom: 1px solid rgba(0, 0, 0, .15);
     height: 160px;
     padding-top: 10px;
     padding-left: 20px;
 }
 
-.hirc-u-header {
+.hirc-u-header{
     font-weight: 600;
     font-size: 20px;
 }
 
-.hotel-item-room-card-dowm {
+.hotel-item-room-card-dowm{
     padding-top: 20px;
     padding-left: 36%;
 }
 
-.hirc-d-item {
+.hirc-d-item{
     display: flex;
     justify-content: space-between;
     padding-right: 20px;
     align-items: center;
 }
 
-.hirc-d-text {
+.hirc-d-text{
     margin-top: 40px;
     color: rgb(66, 66, 66);
     padding-left: 7px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.full-height {
+    min-height: 100vh;
+}
+
+[type="checkbox"]:checked,
+[type="checkbox"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+
+.modal-btn:checked+label,
+.modal-btn:not(:checked)+label {
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 2;
+    height: 50px;
+    transition: all 200ms linear;
+    border-radius: 4px;
+    width: 240px;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    align-self: center;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(77, 69, 173);
+    color: #ffeba7;
+    box-shadow: 0 12px 35px 0 rgba(16, 39, 112, .25);
+}
+
+.modal-btn:not(:checked)+label:hover {
+    background-color: #ffeba7;
+    color: #102770;
+}
+
+.modal-btn:checked+label:after,
+.modal-btn:not(:checked)+label:after {
+    position: fixed;
+    top: 8%;
+    right: 2%;
+    z-index: 1000;
+    width: 50px;
+    border-radius: 3px;
+    height: 45px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 18px;
+    background-color: #ffeba7;
+    color: rgb(77, 69, 173);
+    content: '\2715';
+    box-shadow: 0 12px 25px 0 rgba(16, 39, 112, .25);
+    transition: all 200ms linear;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    font-family: Courier, monospace;
+    font-size: 40px;
+}
+
+.modal-btn:checked+label:hover:after,
+.modal-btn:not(:checked)+label:hover:after {
+    background-color: #102770;
+    color: #ffeba7;
+}
+
+.modal-btn:checked+label:after {
+    transition: opacity 300ms 300ms ease, transform 300ms 300ms ease, background-color 250ms linear, color 250ms linear;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.modal {
+    position: fixed;
+    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    overflow-x: hidden;
+    background-color: rgba(31, 32, 41, .75);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 250ms 700ms ease;
+}
+
+.modal-btn:checked~.modal {
+    pointer-events: auto;
+    opacity: 1;
+    transition: all 300ms ease-in-out;
+}
+
+.modal-wrap {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    padding-bottom: 20px;
+    background-color: rgb(77, 69, 173);
+    align-self: center;
+    box-shadow: 0 12px 25px 0 rgba(199, 175, 189, .25);
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 250ms 250ms ease, transform 300ms 250ms ease;
+    height: 300px;
+}
+
+.modal-wrap p {
+    padding: 20px 30px 0 30px;
+}
+
+.modal-btn:checked~.modal .modal-wrap {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 250ms 500ms ease, transform 350ms 500ms ease;
+}
+
+
+.logo img {
+    height: 26px;
+    width: auto;
+    display: block;
+    filter: brightness(10%);
+    transition: filter 250ms 700ms linear;
+}
+
+.modal-btn:checked~.logo img {
+    filter: brightness(100%);
+    transition: all 250ms linear;
+}
+
+.aa-sitem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+
+.aa-sitem .aa-sinput {
+    width: 250px;
+    height: 45px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    padding-left: 5px;
+    margin-right: 15%;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.aa-sitem .aa-stext {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #3e3e3e;
+    padding-top: 6px;
+    margin-left: 10%;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.aa-sbutton {
+    left: 50%;
+    margin: 35px;
+}
+
+.aa-sbutton button {
+    width: 300px;
+    height: 45px;
+    font-size: 22px;
+    border-radius: 30px;
+    border-color: #466ce8;
+    color: #e4e9ee;
+    background-color: #466ce8;
+}
+
+.aa-sbutton button:hover {
+    background-color: #958ff0;
+    border-color: #958ff0;
+    cursor: pointer;
+}
+
+.pc-action-a2 {
+    width: 500px;
+    height: 300px;
 }
 </style>

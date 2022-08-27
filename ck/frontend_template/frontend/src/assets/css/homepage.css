@@ -1,4 +1,5 @@
 /* Reset. */
+
 * {
     box-sizing: border-box;
 }
@@ -10,7 +11,9 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+
 /* Panels. */
+
 .splitview {
     position: relative;
     width: 100%;
@@ -25,54 +28,54 @@ body {
     overflow: hidden;
 }
 
-    .panel .content {
-        position: absolute;
-        width: 100vw;
-        min-height: 45vw;
-        color: #FFF;
-    }
+.panel .content {
+    position: absolute;
+    width: 100vw;
+    min-height: 45vw;
+    color: #FFF;
+}
 
-    .panel .description {
-        width: 25%;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        text-align: center;
-    }
+.panel .description {
+    width: 25%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
 
-    .panel img {
-        box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.15);
-        width: 35%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
+.panel img {
+    box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.15);
+    width: 35%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 .bottom {
     background-color: rgb(44, 44, 44);
     z-index: 1;
 }
 
-    .bottom .description {
-        right: 5%;
-    }
+.bottom .description {
+    right: 5%;
+}
 
 .top {
     background-color: rgb(77, 69, 173);
     z-index: 2;
     width: 50vw;
-
     /*-webkit-clip-path: polygon(60% 0, 100% 0, 100% 100%, 40% 100%);
     clip-path: polygon(60% 0, 100% 0, 100% 100%, 40% 100%);*/
 }
 
-    .top .description {
-        left: 5%;
-    }
+.top .description {
+    left: 5%;
+}
+
 
 /* Handle. */
+
 .handle {
     height: 100%;
     position: absolute;
@@ -84,7 +87,9 @@ body {
     z-index: 3;
 }
 
+
 /* Skewed. */
+
 .skewed .handle {
     top: 50%;
     transform: rotate(30deg) translateY(-50%);
@@ -105,13 +110,14 @@ body {
     margin-left: 1000px;
 }
 
+
 /* Responsive. */
+
 @media (max-width: 900px) {
     body {
         font-size: 75%;
     }
 }
-
 
 .plan-steps {
     width: 70%;
@@ -215,8 +221,19 @@ body {
 }
 
 .card-title {
+    box-sizing: border-box;
+    padding: 35px;
+    display: flex;
     height: 250px;
-    align-items: center;
+    align-content: stretch;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+.card-title:first-child {
+    display: flex;
+    break-after: always;
+    justify-self: flex-end;
 }
 
 .card-content {
@@ -232,7 +249,9 @@ body {
     bottom: 0;
 }
 
+
 /* On mouse-over, add a deeper shadow */
+
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     transition: all 0.5s ease;
@@ -376,7 +395,6 @@ body {
     opacity: 0;
     transform: scale(0.6);
     transition: opacity 250ms 250ms ease, transform 300ms 250ms ease;
-
 }
 
 .modal-wrap img {
@@ -395,7 +413,6 @@ body {
     transition: opacity 250ms 500ms ease, transform 350ms 500ms ease;
 }
 
-
 .logo img {
     height: 26px;
     width: auto;
@@ -407,4 +424,58 @@ body {
 .modal-btn:checked~.logo img {
     filter: brightness(100%);
     transition: all 250ms linear;
+}
+
+.tour-list-parent {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.tour-child {
+    flex: 0 0 30%;
+    /* explanation below */
+    margin: 10px
+}
+
+.caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    color: white;
+    transform: translate(35%, 90%);
+}
+
+.tour-detail {
+    display: none;
+}
+
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    color: white;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.create-trip-btn {
+    float: right;
+    border-radius: 20px;
+    background-color: gray;
+    color: white;
+}
+
+.create-trip-btn:hover {
+    background-color: black;
+    color: white;
+}
+
+.card-img-top {
+    filter: brightness(50%)
+}
+
+.full-trip-link {
+    margin: 0 auto;
 }

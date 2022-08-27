@@ -19,7 +19,10 @@ type Defi =
  service {
    connect: () -> (TxReceipt);
    payGenerateTrip: () -> (TxReceipt);
+   swapYasuoToZed: (nat) -> (TxReceipt);
+   swapZedToYasuo: (nat) -> (TxReceipt);
    transferFrom: (principal, principal, nat, Token) -> (TxReceipt);
+   transferZed: (principal, nat) -> (TxReceipt);
    yasuoBalanceOf: (principal) -> (nat);
    zedBalanceOf: (principal) -> (nat);
  };

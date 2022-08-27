@@ -62,30 +62,7 @@
             </div>
             <div class="pc-list">
                 <p id="list-title">My trip</p>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-title">
-                            <h1>Title</h1>
-                            <p>Date fill in here</p>
-                        </div>
-                        <div class="card-content"> Content card 1
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">
-                            <h1>Title</h1>
-                            <p>Date fill in here</p>
-                        </div>
-                        <div class="card-content"> Content card 2</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">
-                            <h1>Title</h1>
-                            <p>Date fill in here</p>
-                        </div>
-                        <div class="card-content"> Content card 3</div>
-                    </div>
-                </div>
+                
             </div>
             <div class="pc-advertisement">
                 <p> Easy to use, easy to browse </p>

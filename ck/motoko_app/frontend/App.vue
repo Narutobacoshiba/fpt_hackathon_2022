@@ -18,6 +18,7 @@ import HomePage from "./views/HomePage.vue"
 import TripPage from "./views/TripPage.vue"
 import BookingPage from "./views/Booking.vue";
 import Principal from "./components/Principal.vue"
+import SwapPage from "./views/SwapPage.vue";
 
 const client = createClient({
   canisters: {
@@ -71,6 +72,11 @@ const getTrip = (trip) => {
                     Booking
                 </a>
             </li>
+            <li class="navx-item right-item">
+                <a class="navx-link" @click="routing = 'swap'" href="#">
+                    Swap
+                </a>
+            </li>
         </ul>
       </div>
       <ConnectDialog />
@@ -80,6 +86,7 @@ const getTrip = (trip) => {
         <HomePage @tripReady="getTrip" v-if="routing == 'home'"/>
         <TripPage :trip="trip_date" v-if="routing == 'trip'"/>
         <BookingPage v-if="routing == 'booking'"/>
+        <SwapPage v-if="routing == 'swap'" />
       </div>
       <div class="app-footer">
       </div>
