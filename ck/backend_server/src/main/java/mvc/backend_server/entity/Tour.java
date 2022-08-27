@@ -29,6 +29,17 @@ public class Tour {
     @Column(name = "account_id", nullable = false)
     private String account;
 
+    @Column(name = "numberOfDays")
+    private  int numberOfDays;
+
+    public int getNumberOfDays() {
+        return numberOfDays;
+    }
+
+    public void setNumberOfDays(int numberOfDays) {
+        this.numberOfDays = numberOfDays;
+    }
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 
     private List<DayOfTrip> listDays;
