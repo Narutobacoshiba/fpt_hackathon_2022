@@ -10,19 +10,19 @@ import {ref} from "vue";
 /*
  * Import canister definitions like this:
  */
-import * as nft from "../.dfx/local/canisters/nft"
+import * as defi from "../.dfx/local/canisters/defi"
 /*
  * Some examples to get you started
  */
 import HomePage from "./views/HomePage.vue"
 import TripPage from "./views/TripPage.vue"
-import BookingPage from "./views/Booking.vue";
+import BookingPage from "./views/Booking.vue"
 import Principal from "./components/Principal.vue"
-import SwapPage from "./views/SwapPage.vue";
-
+import SwapPage from "./views/SwapPage.vue"
+import MyBooking from "./views/MyBooking.vue"
 const client = createClient({
   canisters: {
-    nft,
+    defi
   },
   providers: defaultProviders,
   globalProviderConfig: {
@@ -63,8 +63,8 @@ const getTrip = (trip) => {
                 </a>
             </li>
             <li class="navx-item right-item">
-                <a class="navx-link" @click="routing('/')" href="#">
-                    My trips
+                <a class="navx-link" @click="routing = 'bookingList'" href="#">
+                    My Booking
                 </a>
             </li>
             <li class="navx-item right-item">
@@ -87,6 +87,7 @@ const getTrip = (trip) => {
         <TripPage :trip="trip_date" v-if="routing == 'trip'"/>
         <BookingPage v-if="routing == 'booking'"/>
         <SwapPage v-if="routing == 'swap'" />
+        <MyBooking v-if="routing == 'bookingList'" />
       </div>
       <div class="app-footer">
       </div>
@@ -136,7 +137,6 @@ ul {
 .navx-item {
   display: inline-block;
   height: 100%;
-  width: 100px;
   padding: 1rem 1rem 1rem 1rem;
 }
 
@@ -164,6 +164,10 @@ ul {
   line-height: 1.5;
   color: #525c68;
   text-decoration: none;
+}
+
+.right-item {
+  display: inline-block;
 }
 
 </style>
