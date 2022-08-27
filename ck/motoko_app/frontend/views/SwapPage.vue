@@ -2,7 +2,33 @@
     <div>
         <div class="swap-body">
             <div class="swap-background"></div>
-            <div class="swap-card">
+            <div class="swap-content">
+                <div class="swap-nav">
+                    <div v-if="nav_check == 'transaction'">
+                        <ul class="sn-ul">
+                            <li style="font-size: 18px; color: white;" class="checked">
+                                <a style="color: black;" href="#"
+                                    @click="display = 'transaction', nav_check = 'transaction'">Transaction</a>
+                            </li>
+                            <li style="font-size: 18px; color: white;">
+                                <a style="color: black;" href="#" @click="display = 'swap', nav_check = 'swap'">Swap</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div v-if="nav_check == 'swap'">
+                        <ul class="sn-ul">
+                            <li style="font-size: 18px; color: white;">
+                                <a style="color: black;" href="#"
+                                    @click="display = 'transaction', nav_check = 'transaction'">Transaction</a>
+                            </li>
+                            <li style="font-size: 18px; color: white;" class="checked">
+                                <a style="color: black;" href="#" @click="display = 'swap', nav_check = 'swap'">Swap</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="swap-card" v-if="display == 'swap'">
                 <div class="sc-title">
                     <h4 style="margin-top: 0; margin-bottom: 0; font-size: 25px;"> Swap </h4>
                     <button @click="() => TogglePopup('buttonTrigger')" class="b-nav-item-button-1">
@@ -42,10 +68,45 @@
                     <button>Swap</button>
                 </div>
             </div>
-            <div class="list-token">
-                <h4>Hello Beautiful Lady!</h4>
-
+            <div class="transaction-card" v-if="display == 'transaction'">
+                <div class="tc-title">
+                    <h4> Transaction </h4>
+                    <button @click="() => TogglePopup('buttonTrigger')">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                </div>
+                <div class="tc-swap-content">
+                    <div class="sc-input">
+                        <div class="sci-hl">
+                            <div class="sci-hl-input">
+                                <input placeholder=".0" />
+                            </div>
+                            <div class="sci-hl-info">
+                                <h4>TOKEN 1</h4>
+                                <p>balance: {{ 0 }}</p>
+                            </div>
+                        </div>
+                        <div class="sci-hr"></div>
+                    </div>
+                    <div class="sc-output">
+                        <div class="sci-hl">
+                            <div class="sci-hl-input">
+                                <input placeholder=".0" />
+                            </div>
+                            <div class="sci-hl-info">
+                                <h4>TOKEN 2</h4>
+                                <p>balance: {{ 0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tc-button-swap">
+                    <button>Swap</button>
+                </div>
             </div>
+        </div>
+        <div class="list-token">
+            <h4>Hello Beautiful Lady!</h4>
         </div>
     </div>
 </template>
@@ -63,10 +124,40 @@ const TogglePopup = (trigger) => {
 
 }
 
+const display = ref('transaction')
+const nav_check = ref('transaction')
 </script>
 
 
 <style scoped>
+.swap-content {
+    display: block;
+    margin-top: -40%;
+}
+
+.sn-ul {
+    display: flex;
+    color: white;
+    justify-content: center;
+}
+
+.swap-nav {
+    margin-left: 42%;
+    width: 16%;
+    margin-bottom: 60px;
+    background-color: white;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.swap-nav li {
+    margin: auto;
+}
+
+.checked {
+    font-weight: bold;
+}
+
 .swap-background {
     width: 100%;
     height: 841px;
@@ -78,7 +169,7 @@ const TogglePopup = (trigger) => {
 
 .swap-card {
     display: block;
-    margin-top: -35%;
+    margin-top: -0.1%;
     z-index: 10;
     width: 40%;
     background-color: rgb(241, 236, 236);
@@ -157,6 +248,7 @@ const TogglePopup = (trigger) => {
     display: block;
     height: 80px;
     margin-left: 10%;
+    border-radius: 5px;
 }
 
 .list-token {
@@ -184,5 +276,51 @@ const TogglePopup = (trigger) => {
     border-color: rgb(77, 69, 173);
     color: #e4e9ee;
     background-color: rgb(77, 69, 173);
+}
+
+.tc-title {
+    display: flex;
+    padding: 10px 15PX;
+    margin: auto;
+}
+
+.tc-title button {
+    margin-left: 80%;
+    font-size: 20px;
+    border: 0;
+    background-color: rgb(241, 236, 236);
+}
+
+.tc-title button:hover {
+    cursor: pointer;
+    font-size: 22px;
+}
+
+
+.tc-button-swap {
+    text-align: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.tc-button-swap button {
+    width: 240px;
+    height: 50px;
+    font-size: 22px;
+    border-radius: 10px;
+    border-color: rgb(77, 69, 173);
+    color: #e4e9ee;
+    background-color: rgb(77, 69, 173);
+}
+
+.transaction-card {
+    display: block;
+    z-index: 10;
+    width: 40%;
+    background-color: rgb(241, 236, 236);
+    box-shadow: 0.2px 2px 129px black;
+    margin-left: 30%;
+    border-radius: 5px;
+    height: 400px;
 }
 </style>
