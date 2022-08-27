@@ -14,6 +14,7 @@
  * Some examples to get you started
  */
 import HomePage from "./views/HomePage.vue"
+import Booking from "./views/Booking.vue"
 
 const routing = (url) => {
 
@@ -47,7 +48,9 @@ const routing = (url) => {
     <div class="app-header">
     </div>
     <div class="app-view">
-      <HomePage />
+      <!-- <HomePage v-if="routing == 'home'"/>
+      <Rating v-if="routing == 'rating'"/> -->
+      <Booking />
     </div>
     <div class="app-footer">
     </div>

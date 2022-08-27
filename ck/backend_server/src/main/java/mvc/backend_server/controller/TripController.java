@@ -52,27 +52,28 @@ public class TripController {
         System.out.println(tripGenerateDTO.getBudget());
         System.out.println(tripGenerateDTO.getDestination());
         System.out.println(tripGenerateDTO.getWalletId());
+
         java.util.Date parsed = format.parse(tripGenerateDTO.getStartDate());
         Date sDate = new Date(parsed.getTime());
         parsed = format.parse(tripGenerateDTO.getEndDate());
         Date eDate = new Date(parsed.getTime());
-        ArrayList<MyPOI> listPoi= (ArrayList<MyPOI>) poiRepo.findAll();
+        ArrayList<MyPOI> listPoi = (ArrayList<MyPOI>) poiRepo.findAll();
         int numberOfPOI = listPoi.size();
         MyPOI[] POIs = new MyPOI[numberOfPOI];
-        for(int i=0;i<listPoi.size();i++){
+        for (int i = 0; i < listPoi.size(); i++) {
             POIs[i] = listPoi.get(i);
         }
-        ArrayList<Distance> listDistance= (ArrayList<Distance>) distanceRepo.findAll();
-        double[][] distanceOfPOI=new double[numberOfPOI][numberOfPOI];
-        for(int i=0;i<listDistance.size();i++){
-            distanceOfPOI[listDistance.get(i).getStartStation().getPOIId()][listDistance.get(i).getEndStation().getPOIId()]=listDistance.get(i).getDistance();
+        ArrayList<Distance> listDistance = (ArrayList<Distance>) distanceRepo.findAll();
+        double[][] distanceOfPOI = new double[numberOfPOI][numberOfPOI];
+        for (int i = 0; i < listDistance.size(); i++) {
+            distanceOfPOI[listDistance.get(i).getStartStation().getPOIId()][listDistance.get(i).getEndStation().getPOIId()] = listDistance.get(i).getDistance();
         }
-        Data data = new Data(sDate,eDate,distanceOfPOI,POIs,numberOfPOI);
+        Data data = new Data(sDate, eDate, distanceOfPOI, POIs, numberOfPOI);
 
         GeneticAlgorithmsImplementer ga = new GeneticAlgorithmsImplementer(data);
         Solution s = ga.implementGA(data);
 
-        Tour tour =s.toTour(data);
+        Tour tour = s.toTour(data);
         //tourRepo.save(tour);
         Tour add = new Tour();
         add.setStartDate(sDate);
@@ -80,21 +81,20 @@ public class TripController {
 
         add.setAccount(tripGenerateDTO.getWalletId());
 
-         int tourid =tourRepo.save(add).getId();
-         tour.setId(tourid);
-         tour.setStartDate(sDate);
-         tour.setEndDate(eDate);
+        int tourid = tourRepo.save(add).getId();
+        tour.setId(tourid);
+        tour.setStartDate(sDate);
+        tour.setEndDate(eDate);
+        tour.setAccount(tripGenerateDTO.getWalletId());
+        for (DayOfTrip day : tour.getListDays()) {
 
-         tour.setAccount(tripGenerateDTO.getWalletId());
-
-        for(DayOfTrip day :tour.getListDays()){
             DayOfTrip daysAdded = new DayOfTrip();
             daysAdded.setTour(tour);
             daysAdded.setDate(day.getDate());
             daysAdded.setNumber(day.getNumber());
             int dayid = dayOfTripRepo.save(daysAdded).getId();
             day.setId(dayid);
-            for (POIOfDay poi: day.getListPOIs()) {
+            for (POIOfDay poi : day.getListPOIs()) {
                 poi.setDayOfTrip(daysAdded);
 
                 poiOfDayRepo.save(poi);
@@ -102,16 +102,17 @@ public class TripController {
         }
 
 
-
         return tour;
 
 
-
     }
+
     @GetMapping("/getByAccount/{account}")
     public ResponseEntity<ArrayList<Tour>> getTourByAccount(@PathVariable String account){
 
             ArrayList<Tour> optTour = tourRepo.getToursByAccount(account);
+
+
             return new ResponseEntity<>(optTour, HttpStatus.OK);
 
     }
@@ -121,8 +122,11 @@ public class TripController {
         return new ResponseEntity<>(optTour, HttpStatus.OK);
 
     }
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<HttpStatus> deleteTour(@PathVariable int id){
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteTour(@PathVariable int id) {
+
         try {
             tourRepo.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -132,17 +136,23 @@ public class TripController {
     }
 
     @PutMapping()
+
     public ResponseEntity<Tour> updateTour(@RequestBody Tour tour){
             int id = tour.getId();
             Tour oldTour = tourRepo.getTourById(id);
             int n =5;
             for (DayOfTrip day:oldTour.getListDays()) {
+
+
                 day.getListPOIs().clear();
                 tourRepo.save(oldTour);
             }
-    
-            for (DayOfTrip day: tour.getListDays()){
-                for(POIOfDay poi : day.getListPOIs()){
+
+
+
+            for (DayOfTrip day : tour.getListDays()) {
+                for (POIOfDay poi : day.getListPOIs()) {
+
                     POIOfDay ePoi = poiOfDayRepo.findPOIOfDayById(poi.getId());
                     ePoi.setStartTime(poi.getStartTime());
                     ePoi.setEndTime(poi.getEndTime());
