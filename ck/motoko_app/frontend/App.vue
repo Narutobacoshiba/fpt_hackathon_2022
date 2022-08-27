@@ -6,6 +6,7 @@ import { createClient } from "@connect2ic/core"
 import { defaultProviders } from "@connect2ic/core/providers"
 import { ConnectButton, ConnectDialog, Connect2ICProvider } from "@connect2ic/vue"
 import "@connect2ic/core/style.css"
+import {ref} from "vue";
 /*
  * Import canister definitions like this:
  */
@@ -15,6 +16,7 @@ import * as nft from "../.dfx/local/canisters/nft"
  */
 import HomePage from "./views/HomePage.vue"
 import TripPage from "./views/TripPage.vue"
+import BookingPage from "./views/Booking.vue";
 
 const client = createClient({
   canisters: {
@@ -26,8 +28,12 @@ const client = createClient({
   },
 })
 
-const routing = (url) => {
+var routing = ref("home")
+var trip_date = ref({})
 
+const getTrip = (trip) => {
+  trip_date.value = trip
+  routing.value = "trip"
 }
 
 </script>
@@ -37,6 +43,11 @@ const routing = (url) => {
     <div class="App">
       <div class="app-navbar">
         <ul class="navbar-navx">
+          <li class="navx-item">
+                <a class="navx-link" @click="routing = 'booking'" href="#">
+                    Booking
+                </a>
+            </li>
             <li class="navx-item">
                 <a class="navx-link" @click="routing('/')" href="#">
                     My trips
@@ -56,7 +67,9 @@ const routing = (url) => {
       <div class="app-header">
       </div>
       <div class="app-view">
-        <TripPage />
+        <HomePage @tripReady="getTrip" v-if="routing == 'home'"/>
+        <TripPage :trip="trip_date" v-if="routing == 'trip'"/>
+        <BookingPage v-if="routing == 'booking'"/>
       </div>
       <div class="app-footer">
       </div>
