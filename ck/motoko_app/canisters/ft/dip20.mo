@@ -59,20 +59,22 @@ shared(msg) actor class Token(
         };
     };
 
-    private stable var owner_ : Principal = _owner;
-    private stable var logo_ : Text = _logo;
-    private stable var name_ : Text = _name;
-    private stable var decimals_ : Nat8 = _decimals;
-    private stable var symbol_ : Text = _symbol;
-    private stable var totalSupply_ : Nat = _totalSupply;
+    private var owner_ : Principal = _owner;
+    private var logo_ : Text = _logo;
+    private var name_ : Text = _name;
+    private var decimals_ : Nat8 = _decimals;
+    private var symbol_ : Text = _symbol;
+    private var totalSupply_ : Nat = _totalSupply;
     private stable var blackhole : Principal = Principal.fromText("aaaaa-aa");
-    private stable var feeTo : Principal = owner_;
-    private stable var fee : Nat = _fee;
-    private stable var balanceEntries : [(Principal, Nat)] = [];
-    private stable var allowanceEntries : [(Principal, [(Principal, Nat)])] = [];
+    private var feeTo : Principal = owner_;
+    private var fee : Nat = _fee;
+    //private stable var balanceEntries : [(Principal, Nat)] = [];
+    //private stable var allowanceEntries : [(Principal, [(Principal, Nat)])] = [];
+    private var balanceEntries : [(Principal, Nat)] = [];
+    private var allowanceEntries : [(Principal, [(Principal, Nat)])] = [];
     private var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
     private var allowances = HashMap.HashMap<Principal, HashMap.HashMap<Principal, Nat>>(1, Principal.equal, Principal.hash);
-    balances.put(owner_, totalSupply_);
+    
     private stable let genesis : TxRecord = {
         caller = ?owner_;
         op = #mint;
@@ -155,9 +157,44 @@ shared(msg) actor class Token(
     *           historySize/getTransaction/getTransactions
     */
 
+    public shared(msg) func approveToOwner(caller: Principal, value: Nat): async TxReceipt{
+        if(msg.caller == owner_){
+            if(_balanceOf(caller) < fee) { return #Err(#InsufficientBalance); };
+            _chargeFee(caller, fee);
+            let v = value + fee;
+            if (value == 0 and Option.isSome(allowances.get(caller))) {
+                let allowance_caller = Types.unwrap(allowances.get(caller));
+                allowance_caller.delete(msg.caller);
+                if (allowance_caller.size() == 0) { allowances.delete(caller); }
+                else { allowances.put(caller, allowance_caller); };
+            } else if (value != 0 and Option.isNull(allowances.get(caller))) {
+                var temp = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
+                temp.put(msg.caller, v);
+                allowances.put(caller, temp);
+            } else if (value != 0 and Option.isSome(allowances.get(caller))) {
+                let allowance_caller = Types.unwrap(allowances.get(caller));
+                allowance_caller.put(msg.caller, v);
+                allowances.put(caller, allowance_caller);
+            };
+            ignore addRecord(
+                caller, "approve",
+                [
+                    ("to", #Principal(msg.caller)),
+                    ("value", #U64(u64(value))),
+                    ("fee", #U64(u64(fee)))
+                ]
+            );
+            txcounter += 1;
+            return #Ok(txcounter - 1);
+        };
+        return #Err(#Other("wrong owner"));
+    };
+
     /// Transfers value amount of tokens to Principal to.
     public shared(msg) func transfer(to: Principal, value: Nat) : async TxReceipt {
-        if (_balanceOf(msg.caller) < value + fee) { return #Err(#InsufficientBalance); };
+        if (_balanceOf(msg.caller) < value + fee) { 
+            return #Err(#InsufficientBalance); 
+        };
         _chargeFee(msg.caller, fee);
         _transfer(msg.caller, to, value);
         ignore addRecord(
@@ -165,6 +202,25 @@ shared(msg) actor class Token(
             [
                 ("to", #Principal(to)),
                 ("value", #U64(u64(value))),
+                ("fee", #U64(u64(fee)))
+            ]
+        );
+        txcounter += 1;
+        return #Ok(txcounter - 1);
+    };
+
+    public shared(msg) func transferSearchTripFee() : async TxReceipt {
+        var sfee: Nat = 10;
+        if (_balanceOf(msg.caller) < sfee + fee) { 
+            return #Err(#InsufficientBalance); 
+        };
+        _chargeFee(msg.caller, fee);
+        _transfer(msg.caller, owner_, sfee);
+        ignore addRecord(
+            msg.caller, "transfer",
+            [
+                ("to", #Principal(owner_)),
+                ("value", #U64(u64(sfee))),
                 ("fee", #U64(u64(fee)))
             ]
         );
@@ -434,6 +490,7 @@ shared(msg) actor class Token(
             size += 1;
         };
         allowanceEntries := Array.freeze(temp);
+        
     };
 
     system func postupgrade() {
@@ -444,5 +501,9 @@ shared(msg) actor class Token(
             allowances.put(k, allowed_temp);
         };
         allowanceEntries := [];
+        switch(balances.get(owner_)){
+            case(null) balances.put(owner_, totalSupply_);
+            case(?value) {};
+        }
     };
 };

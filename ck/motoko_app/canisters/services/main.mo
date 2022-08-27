@@ -94,7 +94,7 @@ shared(msg) actor class Services(
     }
 
     public shared({caller}) func book(room_id : Nat) : async Result.Result<Text,Text> {
-        witch(roomMap.get(id)){
+        switch(roomMap.get(id)){
             case(null) return #err("There is no room with id : " # Nat.toText(room_id));
             case(?room) {
                 var price : Nat = room._sellPrice;

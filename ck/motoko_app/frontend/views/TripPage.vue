@@ -85,7 +85,7 @@
 import { useCanister, useWallet } from "@connect2ic/vue"
 import { ref } from "vue";
 
-const [nft] = useCanister("nft")
+const [defi] = useCanister("defi")
 const [wallet] = useWallet()
 
 const props = defineProps({

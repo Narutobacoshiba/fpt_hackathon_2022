@@ -1,13 +1,20 @@
 {
   "canisters": {
-    "nft": {
-      "main": "canisters/nft/main.mo",
+    "yasuo": {
+      "main": "canisters/ft/dip20.mo",
       "type": "motoko"
     },
-   
+    "zed": {
+      "main": "canisters/ft/dip20.mo",
+      "type": "motoko"
+    },
+    "defi": {
+      "main": "canisters/services/defi.mo",
+      "type": "motoko"
+    },
     "assets": {
       "dependencies": [
-        "nft"
+        "defi"
       ],
       "frontend": {
         "entrypoint": "dist/index.html"

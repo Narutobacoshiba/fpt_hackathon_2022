@@ -1,0 +1,26 @@
+type TxReceipt = 
+ variant {
+   Err:
+    variant {
+      AmountTooSmall;
+      BlockUsed;
+      ErrorOperationStyle;
+      ErrorTo;
+      InsufficientAllowance;
+      InsufficientBalance;
+      LedgerTrap;
+      Other;
+      Unauthorized;
+    };
+   Ok: nat;
+ };
+type Token = principal;
+type Defi = 
+ service {
+   connect: () -> (TxReceipt);
+   payGenerateTrip: () -> (TxReceipt);
+   transferFrom: (principal, principal, nat, Token) -> (TxReceipt);
+   yasuoBalanceOf: (principal) -> (nat);
+   zedBalanceOf: (principal) -> (nat);
+ };
+service : (principal) -> Defi

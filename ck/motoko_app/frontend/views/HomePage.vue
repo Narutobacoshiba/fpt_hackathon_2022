@@ -143,10 +143,11 @@
 <script setup>
 import { PlanServices } from "../services/plan.services.js"
 import { useCanister, useWallet } from "@connect2ic/vue"
+import { Principal } from '@dfinity/principal';
 import { ref } from "vue";
 
-const [nft] = useCanister("nft")
 const [wallet] = useWallet()
+const [defi] = useCanister("defi")
 
 const emit = defineEmits(['tripReady'])
 
@@ -160,6 +161,9 @@ var plan_param = ref({
 const planning = async () => {
     if (wallet.value) {
         try {
+            let trip_res = await defi.value.payGenerateTrip()
+            console.log(trip_res)
+
             let res = await PlanServices.createPlan(plan_param.value, wallet.value.principal)
             emit("tripReady", res.data)
             console.log("ll")

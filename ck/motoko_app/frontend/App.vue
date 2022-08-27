@@ -10,7 +10,7 @@ import {ref} from "vue";
 /*
  * Import canister definitions like this:
  */
-import * as nft from "../.dfx/local/canisters/nft"
+import * as defi from "../.dfx/local/canisters/defi"
 /*
  * Some examples to get you started
  */
@@ -21,7 +21,7 @@ import Principal from "./components/Principal.vue"
 
 const client = createClient({
   canisters: {
-    nft,
+    defi
   },
   providers: defaultProviders,
   globalProviderConfig: {
@@ -46,7 +46,7 @@ const getTrip = (trip) => {
       <div class="app-navbar">
         <ul class="navbar-navx">
           <li class="navx-item left-item">
-                <a class="navx-link" @click="routing = 'booking'" href="#">
+                <a class="navx-link" @click="routing = 'home'" href="#">
                     Home
                 </a>
             </li>
