@@ -74,7 +74,7 @@
             <div class="caption">
               <h5>{{post.numberOfDays}} days in Hanoi</h5>
               <p class="date-detail">
-                {{ formatDate(post.startDate) }} -{{formatDate(post.endDate) }}
+                {{ formatDate(post.startDate) }} - {{formatDate(post.endDate) }}
               </p>
             </div>
             <div class="card-body">

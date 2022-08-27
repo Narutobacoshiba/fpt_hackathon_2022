@@ -1,18 +1,18 @@
 import type { Principal } from '@dfinity/principal';
+import type { ActorMethod } from '@dfinity/agent';
+
 export interface Defi {
-  'connect' : () => Promise<TxReceipt>,
-  'payGenerateTrip' : () => Promise<TxReceipt>,
-  'swapYasuoToZed' : (arg_0: bigint) => Promise<TxReceipt>,
-  'swapZedToYasuo' : (arg_0: bigint) => Promise<TxReceipt>,
-  'transferFrom' : (
-      arg_0: Principal,
-      arg_1: Principal,
-      arg_2: bigint,
-      arg_3: Token,
-    ) => Promise<TxReceipt>,
-  'transferZed' : (arg_0: Principal, arg_1: bigint) => Promise<TxReceipt>,
-  'yasuoBalanceOf' : (arg_0: Principal) => Promise<bigint>,
-  'zedBalanceOf' : (arg_0: Principal) => Promise<bigint>,
+  'connect' : ActorMethod<[], TxReceipt>,
+  'payGenerateTrip' : ActorMethod<[], TxReceipt>,
+  'swapYasuoToZed' : ActorMethod<[bigint], TxReceipt>,
+  'swapZedToYasuo' : ActorMethod<[bigint], TxReceipt>,
+  'transferFrom' : ActorMethod<
+    [Principal, Principal, bigint, Token],
+    TxReceipt,
+  >,
+  'transferZed' : ActorMethod<[Principal, bigint], TxReceipt>,
+  'yasuoBalanceOf' : ActorMethod<[Principal], bigint>,
+  'zedBalanceOf' : ActorMethod<[Principal], bigint>,
 }
 export type Token = Principal;
 export type TxReceipt = { 'Ok' : bigint } |

@@ -1,0 +1,20 @@
+// Version: 1.0.0
+type Operation = {#approve; #burn; #mint; #transfer; #transferFrom};
+type Time = Int;
+type TransactionStatus = {#failed; #inprogress; #succeeded};
+actor {
+  stable var blackhole : Principal;
+  stable genesis :
+    {
+      amount : Nat;
+      caller : ?Principal;
+      fee : Nat;
+      from : Principal;
+      index : Nat;
+      op : Operation;
+      status : TransactionStatus;
+      timestamp : Time;
+      to : Principal
+    };
+  stable var txcounter : Nat
+};

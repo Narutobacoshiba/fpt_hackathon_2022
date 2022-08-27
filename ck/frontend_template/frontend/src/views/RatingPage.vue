@@ -2,7 +2,7 @@
 // import { useCanister, useWallet } from "@connect2ic/vue"
 import { ref } from "vue";
 import("../assets/css/ratingpage.css");
-
+ import axios from "axios";
 // const [nft] = useCanister("nft")
 // const [wallet] = useWallet()
 </script>
@@ -11,7 +11,7 @@ import("../assets/css/ratingpage.css");
         <div class=" wrap-body row">
 
             <div class="col-md-12 ">
-                <span class="h4 title">Lake of the Restored Sword (Hoan Kiem Lake), Hanoi</span>
+                <span class="h4 title">{{posts.name}}</span>
             </div>
 
 
@@ -21,13 +21,13 @@ import("../assets/css/ratingpage.css");
 
 
 
-                <img class="img-thumb" src="https://s.inspirockcdn.com/ds10/photos/Vietnam/3/lake-of-the-restored-sword-hoan-kiem-lake-1920386144.jpg">
-
+                <img v-if="posts.thumbnail==null" class="img-thumb" src="https://s.inspirockcdn.com/ds10/photos/Vietnam/3/lake-of-the-restored-sword-hoan-kiem-lake-1920386144.jpg">
+                 <img v-else class="img-thumb" :src=posts.thumbnail>
 
             </div>
             <div class="col-md-4">
                 <h4><b>Recommended Duration</b></h4>
-                <h5 class="description">1 hour 30 minutes</h5>
+                <h5 class="description">{{secondsToHms(posts.duration)}}</h5>
                 <br>
 
                 <h4><b>Hours</b></h4>
@@ -66,7 +66,7 @@ import("../assets/css/ratingpage.css");
                 </div>
                 <br>
                 <h4><b>Address</b></h4>
-                <p class="description">Hoàn Kiếm Lake,<br> Hang Trong,<br> Hoàn Kiếm,<br> Hanoi,<br> Vietnam</p>
+                <p class="description">{{concatAddress(posts.location)[0]}}<br>{{concatAddress(posts.location)[1]}}<br>{{concatAddress(posts.location)[2]}}<br>{{concatAddress(posts.location)[3]}}<br>{{concatAddress(posts.location)[4]}}</p>
 
             </div>
 
@@ -168,3 +168,42 @@ import("../assets/css/ratingpage.css");
 
   
 </template>
+
+<script>
+    export default {
+  data() {
+    return {
+      posts: [],
+      errors: [],
+    };
+  },
+  created() {
+    axios.get(`http://localhost:8080/poi/12`)
+      .then((response) => {
+        this.posts = response.data;
+        console.log(this.posts)
+      })
+      .catch((e) => {
+        this.errors.push(e);
+        console.log("fail")
+      });
+  },
+  methods: {
+    secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    return hDisplay + mDisplay + sDisplay; 
+}   ,
+    concatAddress(s){
+        const arr = s.split(",");
+        return arr;
+    }
+  }
+};
+</script>

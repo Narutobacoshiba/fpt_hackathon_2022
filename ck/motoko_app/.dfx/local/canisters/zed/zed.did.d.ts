@@ -1,4 +1,6 @@
 import type { Principal } from '@dfinity/principal';
+import type { ActorMethod } from '@dfinity/agent';
+
 export interface Metadata {
   'fee' : bigint,
   'decimals' : number,
@@ -10,40 +12,32 @@ export interface Metadata {
 }
 export type Time = bigint;
 export interface Token {
-  'allowance' : (arg_0: Principal, arg_1: Principal) => Promise<bigint>,
-  'approve' : (arg_0: Principal, arg_1: bigint) => Promise<TxReceipt>,
-  'approveToOwner' : (arg_0: Principal, arg_1: bigint) => Promise<TxReceipt>,
-  'balanceOf' : (arg_0: Principal) => Promise<bigint>,
-  'burn' : (arg_0: bigint) => Promise<TxReceipt>,
-  'decimals' : () => Promise<number>,
-  'getAllowanceSize' : () => Promise<bigint>,
-  'getHolders' : (arg_0: bigint, arg_1: bigint) => Promise<
-      Array<[Principal, bigint]>
-    >,
-  'getMetadata' : () => Promise<Metadata>,
-  'getTokenFee' : () => Promise<bigint>,
-  'getTokenInfo' : () => Promise<TokenInfo>,
-  'getUserApprovals' : (arg_0: Principal) => Promise<
-      Array<[Principal, bigint]>
-    >,
-  'historySize' : () => Promise<bigint>,
-  'logo' : () => Promise<string>,
-  'mint' : (arg_0: Principal, arg_1: bigint) => Promise<TxReceipt>,
-  'name' : () => Promise<string>,
-  'setFee' : (arg_0: bigint) => Promise<undefined>,
-  'setFeeTo' : (arg_0: Principal) => Promise<undefined>,
-  'setLogo' : (arg_0: string) => Promise<undefined>,
-  'setName' : (arg_0: string) => Promise<undefined>,
-  'setOwner' : (arg_0: Principal) => Promise<undefined>,
-  'symbol' : () => Promise<string>,
-  'totalSupply' : () => Promise<bigint>,
-  'transfer' : (arg_0: Principal, arg_1: bigint) => Promise<TxReceipt>,
-  'transferFrom' : (
-      arg_0: Principal,
-      arg_1: Principal,
-      arg_2: bigint,
-    ) => Promise<TxReceipt>,
-  'transferSearchTripFee' : () => Promise<TxReceipt>,
+  'allowance' : ActorMethod<[Principal, Principal], bigint>,
+  'approve' : ActorMethod<[Principal, bigint], TxReceipt>,
+  'approveToOwner' : ActorMethod<[Principal, bigint], TxReceipt>,
+  'balanceOf' : ActorMethod<[Principal], bigint>,
+  'burn' : ActorMethod<[bigint], TxReceipt>,
+  'decimals' : ActorMethod<[], number>,
+  'getAllowanceSize' : ActorMethod<[], bigint>,
+  'getHolders' : ActorMethod<[bigint, bigint], Array<[Principal, bigint]>>,
+  'getMetadata' : ActorMethod<[], Metadata>,
+  'getTokenFee' : ActorMethod<[], bigint>,
+  'getTokenInfo' : ActorMethod<[], TokenInfo>,
+  'getUserApprovals' : ActorMethod<[Principal], Array<[Principal, bigint]>>,
+  'historySize' : ActorMethod<[], bigint>,
+  'logo' : ActorMethod<[], string>,
+  'mint' : ActorMethod<[Principal, bigint], TxReceipt>,
+  'name' : ActorMethod<[], string>,
+  'setFee' : ActorMethod<[bigint], undefined>,
+  'setFeeTo' : ActorMethod<[Principal], undefined>,
+  'setLogo' : ActorMethod<[string], undefined>,
+  'setName' : ActorMethod<[string], undefined>,
+  'setOwner' : ActorMethod<[Principal], undefined>,
+  'symbol' : ActorMethod<[], string>,
+  'totalSupply' : ActorMethod<[], bigint>,
+  'transfer' : ActorMethod<[Principal, bigint], TxReceipt>,
+  'transferFrom' : ActorMethod<[Principal, Principal, bigint], TxReceipt>,
+  'transferSearchTripFee' : ActorMethod<[], TxReceipt>,
 }
 export interface TokenInfo {
   'holderNumber' : bigint,
