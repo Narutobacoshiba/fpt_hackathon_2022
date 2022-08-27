@@ -14,11 +14,23 @@
  * Some examples to get you started
  */
 import HomePage from "./views/HomePage.vue"
+
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { ref } from "vue";
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+var routing = ref("home")
+
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
+
 import Booking from "./views/Booking.vue"
+import RatingPage from "./views/RatingPage.vue"
+import SwapPage from "./views/SwapPage.vue"
 
-const routing = (url) => {
-
-}
 
 </script>
 
@@ -44,14 +56,20 @@ const routing = (url) => {
         </li>
       </ul>
     </div>
+    <!-- <button @click="routing = 'rating'">click</button> -->
     <ConnectDialog />
     <div class="app-header">
     </div>
     <div class="app-view">
+
       <!-- <HomePage v-if="routing == 'home'"/>
       <Rating v-if="routing == 'rating'"/> -->
-      <Booking />
+      <!-- <Booking /> -->
+      <!-- <RatingPage /> -->
+      <SwapPage />
+
     </div>
+    
     <div class="app-footer">
     </div>
   </div>
