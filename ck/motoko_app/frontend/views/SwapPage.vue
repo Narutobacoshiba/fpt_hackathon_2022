@@ -42,8 +42,9 @@
                                 <input placeholder=".0" />
                             </div>
                             <div class="sci-hl-info">
-                                <h4 style="margin-top: 0; margin-bottom: 0; font-size: 25px; margin-top: 3px; margin-right: 5px;">
-                                TOKEN 1</h4>
+                                <h4
+                                    style="margin-top: 0; margin-bottom: 0; font-size: 25px; margin-top: 3px; margin-right: 5px;">
+                                    TOKEN 1</h4>
                                 <p style="margin-top: 0; margin-bottom: 0; font-size: 15px; margin-top: 10px;">
                                     balance: {{ 0 }}</p>
                             </div>
@@ -56,8 +57,9 @@
                                 <input placeholder=".0" />
                             </div>
                             <div class="sci-hl-info">
-                                <h4 style="margin-top: 0; margin-bottom: 0; font-size: 25px; margin-top: 3px; margin-right: 5px;">
-                                TOKEN 2</h4>
+                                <h4
+                                    style="margin-top: 0; margin-bottom: 0; font-size: 25px; margin-top: 3px; margin-right: 5px;">
+                                    TOKEN 2</h4>
                                 <p style="margin-top: 0; margin-bottom: 0; font-size: 15px; margin-top: 10px;">
                                     balance: {{ 0 }}</p>
                             </div>
@@ -70,7 +72,7 @@
             </div>
             <div class="transaction-card" v-if="display == 'transaction'">
                 <div class="tc-title">
-                    <h4> Transaction </h4>
+                    <h4 style="margin-top: 0; margin-bottom: 0; font-size: 25px;"> Transaction </h4>
                     <button @click="() => TogglePopup('buttonTrigger')">
                         <i class="fa-solid fa-gear"></i>
                     </button>
@@ -82,8 +84,11 @@
                                 <input placeholder=".0" />
                             </div>
                             <div class="sci-hl-info">
-                                <h4>TOKEN 1</h4>
-                                <p>balance: {{ 0 }}</p>
+                                <h4
+                                    style="margin-top: 0; margin-bottom: 0; font-size: 25px; margin-top: 3px; margin-right: 5px;">
+                                    TOKEN 1</h4>
+                                <p style="margin-top: 0; margin-bottom: 0; font-size: 15px; margin-top: 10px;">balance:
+                                    {{ 0 }}</p>
                             </div>
                         </div>
                         <div class="sci-hr"></div>
@@ -94,8 +99,11 @@
                                 <input placeholder=".0" />
                             </div>
                             <div class="sci-hl-info">
-                                <h4>TOKEN 2</h4>
-                                <p>balance: {{ 0 }}</p>
+                                <h4
+                                    style="margin-top: 0; margin-bottom: 0; font-size: 25px; margin-top: 3px; margin-right: 5px;">
+                                    TOKEN 2</h4>
+                                <p style="margin-top: 0; margin-bottom: 0; font-size: 15px; margin-top: 10px;">balance:
+                                    {{ 0 }}</p>
                             </div>
                         </div>
                     </div>
@@ -169,7 +177,6 @@ const nav_check = ref('transaction')
 
 .swap-card {
     display: block;
-    margin-top: -0.1%;
     z-index: 10;
     width: 40%;
     background-color: rgb(241, 236, 236);
@@ -300,7 +307,7 @@ const nav_check = ref('transaction')
 .tc-button-swap {
     text-align: center;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 25px;
 }
 
 .tc-button-swap button {
@@ -311,6 +318,10 @@ const nav_check = ref('transaction')
     border-color: rgb(77, 69, 173);
     color: #e4e9ee;
     background-color: rgb(77, 69, 173);
+}
+
+.tc-swap-content {
+    margin: 30px;
 }
 
 .transaction-card {
