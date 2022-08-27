@@ -26,11 +26,6 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
-import Booking from "./views/Booking.vue"
-
-const routing = (url) => {
-
-}
 
 
 </script>
@@ -63,9 +58,9 @@ const routing = (url) => {
     </div>
     <div class="app-view">
 
-      <!-- <HomePage v-if="routing == 'home'"/>
-      <Rating v-if="routing == 'rating'"/> -->
-      <Booking />
+      <HomePage/>
+      <!-- <Rating v-if="routing == 'rating'"/> -->
+      
 
     </div>
     
