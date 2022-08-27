@@ -1,6 +1,8 @@
 package mvc.backend_server.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
+
 @Table(name = "tour")
 public class Tour {
     @Id
@@ -27,6 +30,7 @@ public class Tour {
     private String account;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+
     private List<DayOfTrip> listDays;
 
     public int getId() {
@@ -69,8 +73,5 @@ public class Tour {
         this.listDays = listDays;
     }
 
-    public void addDay(DayOfTrip day){
-        listDays.add(day);
-        day.setTour(this);
-    }
+
 }

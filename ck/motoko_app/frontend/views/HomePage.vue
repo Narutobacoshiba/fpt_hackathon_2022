@@ -37,17 +37,21 @@
                             <div class="aa-sitem">
                                 <label class="aa-stext">
                                     Budget
-                                    </label>
+                                </label>
                                 <input type="text" v-model="plan_param.budget" placeholder="5000000VND"
                                     class="aa-sinput">
                             </div>
                             <div class="aa-sitem">
                                 <label class="aa-stext">Start date</label>
-                                <input type="date" v-model="plan_param.startDate" class="aa-sinput">
+                                <!-- <input type="date" v-model="plan_param.startDate" class="aa-sinput"
+                                    min="2000-01-01" id="inputDate1"> -->
+                                 <input type="date" v-model="plan_param.startDate" class="aa-sinput" /> 
                             </div>
                             <div class="aa-sitem">
                                 <label class="aa-stext">End date</label>
-                                <input type="date" v-model="plan_param.endDate" class="aa-sinput">
+                                <!-- <input type="date" v-model="plan_param.endDate" class="aa-sinput"
+                                    min="2000-01-01" id="inputDate2" onclick="calendarDueDate()"> -->
+                                <input type="date" v-model="plan_param.endDate" class="aa-sinput" />
                             </div>
                             <div class="aa-sbutton">
                                 <button @click="planning"> See your trip </button>
@@ -137,32 +141,54 @@
 </template>
 
 <script setup>
-import {PlanServices} from "../services/plan.services.js"
+import { PlanServices } from "../services/plan.services.js"
 import { useCanister, useWallet } from "@connect2ic/vue"
-import {ref} from "vue";
+import { ref } from "vue";
 
 const [nft] = useCanister("nft")
 const [wallet] = useWallet()
 
+const emit = defineEmits(['tripReady'])
+
 var plan_param = ref({
-                destination: null,
-                budget: null,
-                startDate: null,
-                endDate: null
-            })
+    destination: null,
+    budget: null,
+    startDate: null,
+    endDate: null
+})
 
 const planning = async () => {
-    if(wallet.value){
-        try{
+    if (wallet.value) {
+        try {
             let res = await PlanServices.createPlan(plan_param.value, wallet.value.principal)
-            console.log("res: " + res)
-        }catch(error){
+            emit("tripReady", res.data)
+            console.log("ll")
+        } catch (error) {
             console.log(error)
         }
-    }else{
+    } else {
         console.log("you are not connected")
     }
 }
+
+// var today = new Date();
+// var dd = today.getDate();
+// var mm = today.getMonth() + 1; //January is 0!
+// var yyyy = today.getFullYear();
+// if (dd < 10) {
+//     dd = '0' + dd
+// }
+// if (mm < 10) {
+//     mm = '0' + mm
+// }
+// today = yyyy + '-' + mm + '-' + dd;
+// document.getElementById("inputDate1").setAttribute("min", today);
+
+// function calendarDueDate() {
+//     var startdate = document.getElementById("inputDate1").value;
+//     console.log(startdate);
+//     document.getElementById("inputDate2").setAttribute("min", startdate);
+// }
 </script>
 
 <script>
@@ -315,29 +341,29 @@ body {
     overflow: hidden;
 }
 
-    .panel .content {
-        position: absolute;
-        width: 100vw;
-        min-height: 45vw;
-        color: #FFF;
-    }
+.panel .content {
+    position: absolute;
+    width: 100vw;
+    min-height: 45vw;
+    color: #FFF;
+}
 
-    .panel .description {
-        width: 25%;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        text-align: center;
-    }
+.panel .description {
+    width: 25%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
 
-    .panel img {
-        box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.15);
-        width: 35%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
+.panel img {
+    box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.15);
+    width: 35%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 
 .bottom {
@@ -345,9 +371,9 @@ body {
     z-index: 1;
 }
 
-    .bottom .description {
-        right: 5%;
-    }
+.bottom .description {
+    right: 5%;
+}
 
 .top {
     background-color: rgb(77, 69, 173);
@@ -358,9 +384,9 @@ body {
     clip-path: polygon(60% 0, 100% 0, 100% 100%, 40% 100%);*/
 }
 
-    .top .description {
-        left: 5%;
-    }
+.top .description {
+    left: 5%;
+}
 
 /* Handle. */
 .handle {
@@ -436,7 +462,7 @@ body {
     font-size: 15px;
     font-weight: 400;
     font-size: 16px;
-    font-family: monospace;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .aa-sitem {
@@ -454,7 +480,7 @@ body {
     padding-left: 5px;
     margin-right: 15%;
     font-size: 18px;
-    font-family: monospace;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .aa-sitem .aa-stext {

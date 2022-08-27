@@ -1,6 +1,8 @@
 package mvc.backend_server.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,12 +24,13 @@ public class DayOfTrip {
     @Column(name = "date")
     private Date date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)    @JsonIgnore
+
     @JoinColumn(name = "tour_id", nullable = false)
     private Tour tour;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "dayOfTrip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+
     private List<POIOfDay> listPOIs;
 
     public int getId() {

@@ -14,6 +14,7 @@
  * Some examples to get you started
  */
 import HomePage from "./views/HomePage.vue"
+
 import RatingPage from "./views/RatingPage.vue"
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import { ref } from "vue";
@@ -24,6 +25,14 @@ var routing = ref("home")
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
+
+import Booking from "./views/Booking.vue"
+
+const routing = (url) => {
+
+}
+
+
 </script>
 
 <template>
@@ -53,8 +62,11 @@ Vue.use(IconsPlugin)
     <div class="app-header">
     </div>
     <div class="app-view">
-      <!-- <HomePage v-if="routing == 'home'"/> -->
-      <RatingPage />
+
+      <!-- <HomePage v-if="routing == 'home'"/>
+      <Rating v-if="routing == 'rating'"/> -->
+      <Booking />
+
     </div>
     
     <div class="app-footer">

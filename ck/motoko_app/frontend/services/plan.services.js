@@ -16,8 +16,8 @@ export class PlanServices extends BaseService{
           "startDate": param.startDate,
           "endDate": param.endDate
         })
-        console.log("response: " + response)
-        return new ResponseWrapper(response, response.config.data)
+        console.log(response.data)
+        return new ResponseWrapper(response, response.data)
       } catch (error) {
         throw new ErrorWrapper(error)
       }
