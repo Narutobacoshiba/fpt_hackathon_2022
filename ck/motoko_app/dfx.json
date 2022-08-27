@@ -4,6 +4,7 @@
       "main": "canisters/nft/main.mo",
       "type": "motoko"
     },
+   
     "assets": {
       "dependencies": [
         "nft"

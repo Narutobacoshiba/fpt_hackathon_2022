@@ -17,6 +17,8 @@ import * as nft from "../.dfx/local/canisters/nft"
 import HomePage from "./views/HomePage.vue"
 import TripPage from "./views/TripPage.vue"
 import BookingPage from "./views/Booking.vue";
+import Principal from "./components/Principal.vue"
+import SwapPage from "./views/SwapPage.vue";
 
 const client = createClient({
   canisters: {
@@ -27,6 +29,7 @@ const client = createClient({
     dev: import.meta.env.DEV,
   },
 })
+
 
 var routing = ref("home")
 var trip_date = ref({})
@@ -43,23 +46,36 @@ const getTrip = (trip) => {
     <div class="App">
       <div class="app-navbar">
         <ul class="navbar-navx">
-          <li class="navx-item">
-                <a class="navx-link" @click="routing = 'booking'" href="#">
-                    Booking
+          <li class="navx-item left-item">
+                <a class="navx-link" @click="routing = 'home'" href="#">
+                    Home
                 </a>
             </li>
-            <li class="navx-item">
-                <a class="navx-link" @click="routing('/')" href="#">
-                    My trips
-                </a>
+            <li class="middle-item">
+                <Principal />
             </li>
-            <li class="navx-item">
+            <li class="navx-item-button right-item">
+                <ConnectButton />
+            </li>
+            <li class="navx-item right-item">
                 <a class="navx-link" @click="routing('/')" href="#">
                     FAQ
                 </a>
             </li>
-            <li class="navx-item-button">
-                <ConnectButton />
+            <li class="navx-item right-item">
+                <a class="navx-link" @click="routing('/')" href="#">
+                    My trips
+                </a>
+            </li>
+            <li class="navx-item right-item">
+                <a class="navx-link" @click="routing = 'booking'" href="#">
+                    Booking
+                </a>
+            </li>
+            <li class="navx-item right-item">
+                <a class="navx-link" @click="routing = 'swap'" href="#">
+                    Swap
+                </a>
             </li>
         </ul>
       </div>
@@ -70,6 +86,7 @@ const getTrip = (trip) => {
         <HomePage @tripReady="getTrip" v-if="routing == 'home'"/>
         <TripPage :trip="trip_date" v-if="routing == 'trip'"/>
         <BookingPage v-if="routing == 'booking'"/>
+        <SwapPage v-if="routing == 'swap'" />
       </div>
       <div class="app-footer">
       </div>
@@ -112,19 +129,32 @@ ul {
 .navbar-navx {
   height: 100%;
   width: 100%;
-  display: flex;
-  justify-content: flex-end;
   background-color: white;
 
 }
 
 .navx-item {
+  display: inline-block;
   height: 100%;
   width: 100px;
   padding: 1rem 1rem 1rem 1rem;
 }
 
+.left-item{
+  float: left;
+}
+
+.middle-item{
+  display: inline-block;
+  margin-left: 35%;
+  padding-top: 0.5rem;
+}
+.right-item{
+  float: right;
+}
+
 .navx-item-button {
+  display: inline-block;
   padding: 0.5rem 0.5rem 0.5rem 0.5rem;
 }
 

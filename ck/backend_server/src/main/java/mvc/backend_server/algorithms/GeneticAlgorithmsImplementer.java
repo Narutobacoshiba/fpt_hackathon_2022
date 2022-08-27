@@ -222,7 +222,7 @@ public class GeneticAlgorithmsImplementer {
         ArrayList<Solution> results = new ArrayList<>();
         ArrayList<Solution> population = new ArrayList<>();
         //Generation
-        for (int i = 0; i < 3000; i++) {
+        for (int i = 0; i < 500; i++) {
             population.add(generatePopulation(data));
         }
         Collections.sort(population, new Comparator<Solution>() {
@@ -232,20 +232,20 @@ public class GeneticAlgorithmsImplementer {
                 return Double.compare(o1.cal_fitness(), o2.cal_fitness());
             }
         });
-        for (int j = 0; j < 300; j++) {
+        for (int j = 0; j < 100; j++) {
             //Selection
 
             ArrayList<Solution> nextPopulation = new ArrayList<>();
-            for (int i = 0; i < 300; i++) {
+            for (int i = 0; i < 50; i++) {
                 nextPopulation.add(population.get(i));
             }
             //Crossover
-            for (int i = 0; i < 2700; i++) {
+            for (int i = 0; i < 450; i++) {
                 Random rand = new Random();
-                int mom = rand.nextInt(3000);
-                int dad = rand.nextInt(3000);
+                int mom = rand.nextInt(500);
+                int dad = rand.nextInt(500);
                 while (mom == dad) {
-                    dad = rand.nextInt(3000);
+                    dad = rand.nextInt(500);
                 }
                 //nextPopulation.add(crossover(population.get(dad), population.get(mom), data));
                 nextPopulation.add(mutation(population.get(mom), data));
@@ -259,10 +259,10 @@ public class GeneticAlgorithmsImplementer {
             });
 
             //mutation
-            for (int i = 0; i < 600; i++) {
+            for (int i = 0; i < 50; i++) {
                 Random rand = new Random();
-                int choosen = rand.nextInt(2900);
-                choosen += 100;
+                int choosen = rand.nextInt(450);
+                choosen += 25;
                 nextPopulation.set(choosen, mutation2(nextPopulation.get(choosen), data));
             }
             Collections.sort(nextPopulation, new Comparator<Solution>() {

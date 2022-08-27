@@ -1,5 +1,6 @@
 <template>
-    <div class="b-background">
+    <div>
+        <div class="b-background">
         <img src="../assets/image/background_booking.png" />
         <div class="b-background-content">
             <h1>Find your next stay</h1>
@@ -166,11 +167,11 @@
             footer
         </div>
     </div>
+    </div>
 </template>
 
 <script setup>
 import { ref } from "@vue/reactivity"
-import '../assets/css/booking.css'
 
 let adults = 4
 let children = 3
