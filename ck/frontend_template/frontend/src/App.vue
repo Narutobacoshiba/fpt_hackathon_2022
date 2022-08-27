@@ -31,7 +31,7 @@ Vue.use(IconsPlugin)
 import Booking from "./views/Booking.vue"
 import RatingPage from "./views/RatingPage.vue"
 import SwapPage from "./views/SwapPage.vue"
-e
+import Reservation from "./views/ReservationPage.vue"
 
 
 </script>
@@ -72,7 +72,7 @@ e
       <Rating v-if="routing == 'rating'"/> -->
       <!-- <Booking /> -->
       <!-- <RatingPage /> -->
-      <SwapPage />
+      <Reservation />
 
 
     </div>
