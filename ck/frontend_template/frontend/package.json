@@ -9,10 +9,14 @@
   "dependencies": {
     "@samrahnama/triple-state-slider": "^0.1.0",
     "axios": "^0.27.2",
+    "bootstrap-vue": "^2.22.0",
     "vue": "^3.2.37"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.1",
+    "bootstrap": "^4.6.2",
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1",
     "vite": "^3.0.4"
   }
 }
