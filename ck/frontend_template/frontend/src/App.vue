@@ -27,12 +27,11 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
-<<<<<<< HEAD
-=======
+
 import Booking from "./views/Booking.vue"
 import RatingPage from "./views/RatingPage.vue"
 import SwapPage from "./views/SwapPage.vue"
->>>>>>> e812884bc32e75ff86b94a14ba7f262af0b36f9e
+e
 
 
 </script>
@@ -65,17 +64,16 @@ import SwapPage from "./views/SwapPage.vue"
     </div>
     <div class="app-view">
 
-<<<<<<< HEAD
-      <HomePage/>
+
       <!-- <Rating v-if="routing == 'rating'"/> -->
       
-=======
+
       <!-- <HomePage v-if="routing == 'home'"/>
       <Rating v-if="routing == 'rating'"/> -->
       <!-- <Booking /> -->
       <!-- <RatingPage /> -->
       <SwapPage />
->>>>>>> e812884bc32e75ff86b94a14ba7f262af0b36f9e
+
 
     </div>
     
