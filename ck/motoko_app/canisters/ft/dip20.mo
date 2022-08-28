@@ -59,22 +59,23 @@ shared(msg) actor class Token(
         };
     };
 
-    private var owner_ : Principal = _owner;
-    private var logo_ : Text = _logo;
-    private var name_ : Text = _name;
-    private var decimals_ : Nat8 = _decimals;
-    private var symbol_ : Text = _symbol;
-    private var totalSupply_ : Nat = _totalSupply;
+    private stable var owner_ : Principal = _owner;
+    private stable var logo_ : Text = _logo;
+    private stable var name_ : Text = _name;
+    private stable var decimals_ : Nat8 = _decimals;
+    private stable var symbol_ : Text = _symbol;
+    private stable var totalSupply_ : Nat = _totalSupply;
     private stable var blackhole : Principal = Principal.fromText("aaaaa-aa");
-    private var feeTo : Principal = owner_;
-    private var fee : Nat = _fee;
+    private stable var feeTo : Principal = owner_;
+    private stable var fee : Nat = _fee;
     //private stable var balanceEntries : [(Principal, Nat)] = [];
     //private stable var allowanceEntries : [(Principal, [(Principal, Nat)])] = [];
-    private var balanceEntries : [(Principal, Nat)] = [];
-    private var allowanceEntries : [(Principal, [(Principal, Nat)])] = [];
+    private stable var balanceEntries : [(Principal, Nat)] = [];
+    private stable var allowanceEntries : [(Principal, [(Principal, Nat)])] = [];
     private var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
     private var allowances = HashMap.HashMap<Principal, HashMap.HashMap<Principal, Nat>>(1, Principal.equal, Principal.hash);
-    
+    balances.put(owner_, totalSupply_);
+
     private stable let genesis : TxRecord = {
         caller = ?owner_;
         op = #mint;

@@ -46,7 +46,7 @@
             </div>
             <div class="t-middle-section t-section">
                 <!-- <div v-for="(pois, idx) in props.trip.listDays" :key="idx + 'lday'"> -->
-                <div v-for="(pois, idx) in props.listDays" :key="idx + 'lday'">
+                <div v-for="(pois, idx) in props.trip.listDays" :key="idx + 'lday'">
                     <div class="t-day-item" :id="'t-date-' + pois.date">
                         {{ pois.date }}
                     </div>

@@ -8,7 +8,7 @@ export class PlanServices extends BaseService{
 
     static async createPlan(param, wallet_principal) {
       try {
-        const response = await this.request({ auth: false }).post(`${this.entity}/generate`,
+        const response = await this.request({ auth: false }).post(`https://tourismrecommendation.herokuapp.com/trip/generate`,
         {
           "walletId" : wallet_principal,
           "destination":param.destination,

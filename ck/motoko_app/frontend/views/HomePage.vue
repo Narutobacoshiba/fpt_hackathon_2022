@@ -140,7 +140,7 @@ import axios from "axios";
 import { PlanServices } from "../services/plan.services.js"
 import { useCanister, useWallet } from "@connect2ic/vue"
 import { Principal } from '@dfinity/principal';
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 
 const [wallet] = useWallet()
 const [defi] = useCanister("defi")
@@ -153,7 +153,7 @@ var plan_param = ref({
     startDate: null,
     endDate: null
 })
-const principal_id = wallet.principal.value;
+
 const planning = async () => {
     if (wallet.value) {
         try {
@@ -171,6 +171,29 @@ const planning = async () => {
     }
 }
 
+var posts = ref([])
+var errors = ref([])
+
+const heroku = async () =>{
+    await axios.get(`https://tourismrecommendation.herokuapp.com/trip/getByAccount/`+wallet.value.principal)
+                .then((response) => {
+                    posts.value = response.data;
+                    console.log(this.posts)
+                })
+                .catch((e) => {
+                    errors.value.push(e);
+                    console.log("fail")
+            });
+}
+
+watchEffect(() => {
+	if(wallet.value) {
+		heroku()
+	}else{
+        posts.value = []
+        errors.value = []
+    }
+});
 // var today = new Date();
 // var dd = today.getDate();
 // var mm = today.getMonth() + 1; //January is 0!
@@ -195,20 +218,11 @@ const planning = async () => {
 export default {
   data() {
     return {
-      posts: [],
-      errors: [],
+      
     };
   },
   created() {
-    axios.get(`https://tourismrecommendation.herokuapp.com/trip/getByAccount/`+principal_id)
-      .then((response) => {
-        this.posts = response.data;
-        console.log(this.posts)
-      })
-      .catch((e) => {
-        this.errors.push(e);
-        console.log("fail")
-      });
+    
   },
   methods: {
     formatDate(date) {
@@ -753,5 +767,58 @@ body {
 .modal-btn:checked~.logo img {
     filter: brightness(100%);
     transition: all 250ms linear;
+}
+.tour-list-parent {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.tour-child {
+    flex: 0 0 30%;
+    /* explanation below */
+    margin: 10px
+}
+
+.caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    color: white;
+    transform: translate(0%, 90%);
+}
+
+.tour-detail {
+    display: none;
+}
+
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    color: white;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.create-trip-btn {
+    float: right;
+    border-radius: 20px;
+    background-color: gray;
+    color: white;
+}
+
+.create-trip-btn:hover {
+    background-color: black;
+    color: white;
+}
+
+.card-img-top {
+    filter: brightness(50%)
+}
+
+.full-trip-link {
+    margin: 0 auto;
 }
 </style>

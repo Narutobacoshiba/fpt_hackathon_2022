@@ -168,13 +168,13 @@ var zed_transfer = ref(0)
 
 watch(zed_swap, (newValue, oldValue) => {
     if(!arrow.value){
-        yasuo_swap.value = Math.ceil(newValue / 10)
+        //yasuo_swap.value = Math.floor(newValue / 10)
     }
 });
 
 watch(yasuo_swap, (newValue, oldValue) => {
     if(arrow.value){
-        zed_swap.value = newValue * 10
+        //zed_swap.value = newValue * 10
     }
 })
 
@@ -182,14 +182,14 @@ const swapToken = async () => {
     if(!arrow.value){
         let res = await defi.value.swapZedToYasuo(BigInt(zed_swap.value))
         if("Ok" in res){
-            zed_balance.value -= zed_swap.value
-            yasuo_balance.value += yasuo_swap.value
+            zed_balance.value -= BigInt(zed_swap.value)
+            yasuo_balance.value += BigInt(res["Ok"])
         }
     }else{
         let res = await defi.value.swapYasuoToZed(BigInt(yasuo_swap.value))
         if("Ok" in res){
-            zed_balance.value += zed_swap.value
-            yasuo_balance.value -= yasuo_swap.value
+            zed_balance.value += BigInt(res["Ok"])
+            yasuo_balance.value -= BigInt(yasuo_swap.value)
         }
     }
 }

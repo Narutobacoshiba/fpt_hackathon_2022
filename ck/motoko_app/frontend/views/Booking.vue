@@ -41,10 +41,10 @@
         </div>
     </div>
     <div class="hotel-main-body">
-        <div class="hotel-h-item">
+        <div class="hotel-h-item" v-if="hotel">
             <div class="hotel-h-item-up">
                 <div class="hotel-item-up-hl">
-                    <div class="hiu-header">Resort Novotel</div>
+                    <div class="hiu-header">{{hotel._name}}</div>
                     <div class="hiu-rating">
                         <div class="hiu-star">
                             <span class="fa fa-star checked"></span>
@@ -54,11 +54,11 @@
                             <span class="fa fa-star"></span>
                         </div>
                         <div class="hiu-score">
-                            4.1
+                            {{hotel._rating}}
                         </div>
                     </div>
                     <div class="hm-text-light">
-                        90. 19 Alley of Ly Thuong Kiet street, Phan Chu Trinh ward. Hoan Kiem district, Hanoi city
+                        {{hotel._information}}
                     </div>
                 </div>
                 <div class="hotel-item-up-hr">
@@ -66,7 +66,7 @@
                         Price range from
                     </div>
                     <div class="hm-text-light">
-                        <span style="font-size: 30px;">1.699.200 VND</span>/night
+                        <span style="font-size: 30px;">{{hotel._priceRange}} VND</span>/night
                     </div>
                     <div class="hm-button">
                         <a href="#list-room"><button> BOOK A ROOM</button></a>
@@ -87,26 +87,29 @@
                     <div class="hiu-symbol">
                         <span><i class="fa-solid fa-p"></i> - Free Parking</span>
                     </div>
+                    <div class="rating-symbol" v-if="has_booked">
+                        <a @click="ratingAction(hotel._hotelID)"><button> RATING</button></a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="list-room" class="hotel-h-item-b">
+        <div id="list-room" class="hotel-h-item-b" v-for="room in list_rooms" :key="room">
             <div class="hotel-h-item-room">
                 <div class="hotel-item-room-name">
-                    Delux Room
+                    {{room._name}}
                 </div>
                 <div class="hotel-item-room-h">
                     <div class="hotel-item-room-hl">
                         <img width="300" height="200"
                             src="https://khachsantaythi.com.vn/wp-content/uploads/2019/05/DSCF4744-1024x683.jpg" />
                         <div class="hiu-symbol">
-                            <span><i class="fa-solid fa-house"></i> - 40m2</span>
+                            <span><i class="fa-solid fa-house"></i> - {{room._size}}</span>
                         </div>
                         <div class="hiu-symbol">
-                            <span><i class="fa-solid fa-bed"></i> - 2 singles bed</span>
+                            <span><i class="fa-solid fa-bed"></i> - {{room._bed}}</span>
                         </div>
                         <div class="hiu-symbol">
-                            <span><i class="fa-solid fa-wifi"></i> - Wifi</span>
+                            <span><i class="fa-solid fa-wifi"></i> - {{room._wifi ? "Wifi" : "no Wifi"}}</span>
                         </div>
                         <div class="hiu-symbol">
                             <span><i class="fa-solid fa-circle-plus"></i> View more</span>
@@ -115,14 +118,14 @@
                     <div class="hotel-item-room-hr">
                         <div class="hotel-item-room-card-up">
                             <div class="hirc-u-header">Benefits</div>
-                            <div class="hiu-symbol">
-                                <span><i class="fa-solid fa-circle-check"></i> Breakfast included</span>
+                            <div class="hiu-symbol" v-for="benefit in room._benefits" :key="benefit">
+                                <span><i class="fa-solid fa-circle-check"></i> {{benefit}}</span>
                             </div>
                         </div>
                         <div class="hotel-item-room-card-dowm">
                             <div class="hirc-d-item">
                                 <div class="hm-text-light">
-                                    <span style="font-size: 30px;">1.899.000 VND</span>/night
+                                    <span style="font-size: 30px;">{{room._sellPrice}} VND</span>/night
                                 </div>
                                 <div class="hm-button-t">
                                     <input class="modal-btn" type="checkbox" id="modal-btn" name="modal-btn" />
@@ -133,15 +136,15 @@
                                                 <h2>Booking Room</h2>
                                                 <div class="aa-sitem">
                                                     <label class="aa-stext">Start date</label>
-                                                    <input type="datetime-local"
+                                                    <input type="datetime-local" v-model="start_date"
                                                         class="aa-sinput">
                                                 </div>
                                                 <div class="aa-sitem">
                                                     <label class="aa-stext">End date</label>
-                                                    <input type="datetime-local" class="aa-sinput">
+                                                    <input type="datetime-local" class="aa-sinput" v-model="end_date">
                                                 </div>
                                                 <div class="aa-sbutton">
-                                                    <button> Book now!</button>
+                                                    <button @click="bookRoom(room._roomID)"> Book now!</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -162,16 +165,14 @@
                 <button class="popup-close" @click="() => TogglePopup('buttonTrigger')">Close</button>
             </div>
         </div>
-
-        <div class="footer">
-            footer
-        </div>
     </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from "@vue/reactivity"
+import { useCanister, useWallet } from "@connect2ic/vue"
+import { ref, watchEffect, watch } from "vue";
+import { Principal } from '@dfinity/principal';
 
 let adults = 4
 let children = 3
@@ -185,6 +186,72 @@ const popupTriggers = ref({
 const TogglePopup = (trigger) => {
     popupTriggers.value[trigger] = !popupTriggers.value[trigger]
 
+}
+
+var hotel = ref(null)
+var list_rooms = ref([])
+var has_booked = ref(null)
+
+const [wallet] = useWallet()
+const [defi] = useCanister("defi")
+
+var start_date = ref("")
+var end_date = ref("")
+
+const getUnBookedRooms = async () => {
+    var res = await defi.value.getUnBookedRooms()
+    list_rooms.value = res
+}
+
+const toTimestamp = (strDate) => {
+   var datum = Date.parse(strDate);
+   return datum/1000;
+}
+const bookRoom = async (room_id) => {
+    let res = await defi.value.book(BigInt(room_id), toTimestamp(start_date.value), toTimestamp(end_date.value))
+    if("Ok" in res){
+        var temp = []
+        for(const i in list_rooms.value){
+            if(list_rooms.value[i]._roomID != room_id){
+                temp.push(list_rooms.value[i])
+            }
+        }
+        list_rooms.value = temp
+    }
+}
+
+const getHotelInformation = async () => {
+    let res = await defi.value.getHotelInformation();
+    hotel.value = res
+}
+
+const hasBooked = async () => {
+    let res = await defi.value.hasBooked(hotel.value._hotelID)
+    has_booked.value = res
+    console.log(res)
+}
+
+watchEffect(() => {
+	if(wallet.value && defi.value) {
+        getHotelInformation()
+		getUnBookedRooms()
+	}else{
+        yasuo_balance.value = 0;
+        zed_balance.value = 0;
+    }
+});
+
+watchEffect(() => {
+	if(hotel.value && defi.value) {
+        hasBooked()
+	}else{
+        has_booked.value = null
+    }
+});
+
+const emit = defineEmits(['ratingReady'])
+const ratingAction = (hotel_id) => {
+    emit("ratingReady", hotel_id)
 }
 </script>
 
@@ -428,6 +495,22 @@ html {
 }
 
 .hm-button button:hover {
+    cursor: pointer;
+}
+
+.rating-symbol{
+    left: 60%;
+    margin-top: 15px;
+}
+
+.hm-rating-symbol button {
+    width: 240px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 25px;
+    border-color: rgb(77, 69, 173);
+    color: #e4e9ee;
+    background-color: rgb(77, 69, 173);
     cursor: pointer;
 }
 

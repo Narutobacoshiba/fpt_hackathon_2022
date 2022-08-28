@@ -5,7 +5,7 @@ export class Http {
   constructor (status) {
     this.isAuth = status && status.auth ? status.auth : false
     this.instance = axios.create({
-      baseURL: API_URL,
+      //baseURL: API_URL,
     })
     return this.init()
   }
