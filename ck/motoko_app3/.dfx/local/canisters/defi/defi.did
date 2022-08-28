@@ -1,0 +1,79 @@
+type TxReceipt = 
+ variant {
+   Err:
+    variant {
+      AmountTooSmall;
+      BlockUsed;
+      ErrorOperationStyle;
+      ErrorTo;
+      InsufficientAllowance;
+      InsufficientBalance;
+      LedgerTrap;
+      Other;
+      Unauthorized;
+    };
+   Ok: nat;
+ };
+type Token = principal;
+type Room = 
+ record {
+   _bed: text;
+   _benefits: vec text;
+   _name: text;
+   _roomID: nat;
+   _sellPrice: nat;
+   _size: text;
+   _wifi: bool;
+   booked: bool;
+   holder: principal;
+ };
+type Review = 
+ record {
+   _num: nat;
+   _rating: nat;
+   _reviewText: text;
+   _score: int;
+   reviewer: principal;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok: text;
+ };
+type Hotel = 
+ record {
+   _hotelID: principal;
+   _information: text;
+   _name: text;
+   _priceRange: nat;
+   _rating: nat;
+ };
+type Defi = 
+ service {
+   addReview: (principal, nat, text) -> (TxReceipt);
+   addRoom: (nat, text, nat, text, text, vec text, bool) -> (Result);
+   book: (nat, int, int) -> (TxReceipt);
+   cancelBooking: (nat) -> (TxReceipt);
+   connect: () -> (TxReceipt);
+   getBookedRooms: () -> (vec Room);
+   getHotelInformation: () -> (Hotel);
+   getInvariant: () -> (nat) query;
+   getMyBookedRooms: () -> (vec Room);
+   getReviews: (principal) -> (vec Review);
+   getRoom: (nat) -> (opt Room);
+   getRoomsLength: () -> (nat);
+   getUnBookedRooms: () -> (vec Room);
+   hasBooked: (principal) -> (bool);
+   init: () -> ();
+   isHotelPrincipal: () -> (bool);
+   payGenerateTrip: () -> (TxReceipt);
+   removeBooking: (nat, bool) -> (Result);
+   scoreReview: (principal, principal, int) -> (int);
+   swapYasuoToZed: (nat) -> (TxReceipt);
+   swapZedToYasuo: (nat) -> (TxReceipt);
+   transferFrom: (principal, principal, nat, Token) -> (TxReceipt);
+   transferZed: (principal, nat) -> (TxReceipt);
+   yasuoBalanceOf: (principal) -> (nat);
+   zedBalanceOf: (principal) -> (nat);
+ };
+service : (principal) -> Defi
