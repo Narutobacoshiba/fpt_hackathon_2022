@@ -60,10 +60,28 @@
                     </div>
                 </div>
             </div>
-            <div class="pc-list">
-                <p id="list-title">My trip</p>
-                
+           <div class="container pc-list">
+        <div  class="tour-list-parent">
+          <div v-for="post of posts" :key="post" class="tour-child card">
+            <div class="top-right"><i class="fa-solid fa-trash-can fa-lg"></i></div>
+            <img
+              class="card-img-top"
+              src="https://hegka.com/storage/image-content/N8GKHx1ldeMY3uv2OPa9Ls5N9rt8U0N31rcFStIWVrRaX.webp"
+              alt="Card image cap"
+            />
+            <div class="caption">
+              <h5>{{post.numberOfDays}} days in Hanoi</h5>
+              <p class="date-detail">
+                {{ formatDate(post.startDate) }} - {{formatDate(post.endDate) }}
+              </p>
             </div>
+            <div class="card-body">
+              <p class="card-text text-center tour-summary">August . Popular Sights</p>
+              <a href="#" class="stretched-link"></a>
+            </div>
+          </div>
+        </div>
+      </div>
             <div class="pc-advertisement">
                 <p> Easy to use, easy to browse </p>
                 <ul class="plan-steps">
@@ -118,6 +136,7 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { PlanServices } from "../services/plan.services.js"
 import { useCanister, useWallet } from "@connect2ic/vue"
 import { Principal } from '@dfinity/principal';
@@ -134,7 +153,7 @@ var plan_param = ref({
     startDate: null,
     endDate: null
 })
-
+const principal_id = wallet.principal.value;
 const planning = async () => {
     if (wallet.value) {
         try {
@@ -173,6 +192,36 @@ const planning = async () => {
 </script>
 
 <script>
+export default {
+  data() {
+    return {
+      posts: [],
+      errors: [],
+    };
+  },
+  created() {
+    axios.get(`https://tourismrecommendation.herokuapp.com/trip/getByAccount/`+principal_id)
+      .then((response) => {
+        this.posts = response.data;
+        console.log(this.posts)
+      })
+      .catch((e) => {
+        this.errors.push(e);
+        console.log("fail")
+      });
+  },
+  methods: {
+    formatDate(date) {
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      return new Date(date).toLocaleDateString("en", options);
+    },
+  },
+};
 document.addEventListener('DOMContentLoaded', function () {
     var parent = document.querySelector('.splitview'),
         topPanel = parent.querySelector('.top'),

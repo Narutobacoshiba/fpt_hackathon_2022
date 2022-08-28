@@ -19,7 +19,7 @@ export default defineConfig({
         proxy: {
             // This proxies all http requests made to /api to our running dfx instance
             "^/bapi": {
-                target: "http://127.0.0.1:8080",
+                target: "https://tourismrecommendation.herokuapp.com/",
                 changeOrigin: true,
                 secure: false,
                 pathRewrite: { '^/bapi': '' },
