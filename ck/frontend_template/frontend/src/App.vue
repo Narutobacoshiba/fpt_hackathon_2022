@@ -68,11 +68,11 @@ import Reservation from "./views/ReservationPage.vue"
       <!-- <Rating v-if="routing == 'rating'"/> -->
       
 
-      <!-- <HomePage v-if="routing == 'home'"/>
-      <Rating v-if="routing == 'rating'"/> -->
+       <!-- <HomePage v-if="routing == 'home'"/> -->
+     <!-- <Rating v-if="routing == 'rating'"/> -->
       <!-- <Booking /> -->
-      <!-- <RatingPage /> -->
-      <Reservation />
+      <RatingPage />
+      <!-- <HomePage /> -->
 
 
     </div>

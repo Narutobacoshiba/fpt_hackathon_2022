@@ -1,3 +1,4 @@
+
 <template>
     <div class="list-booking">
         <div class="lb-header">
@@ -209,4 +210,5 @@ html {
     color: rgb(66, 66, 66);
     padding-left: 7px;
 }
+
 </style>

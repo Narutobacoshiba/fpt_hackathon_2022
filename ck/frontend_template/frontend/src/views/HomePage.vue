@@ -63,31 +63,26 @@
         </div>
       </div>
       <div class="container pc-list">
-        <!-- <p id="list-title">My trip</p>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-title">
-                            <h1>Title</h1>
-                            <p>Date fill in here</p>
-                        </div>
-                        <div class="card-content"> Content card 1
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">
-                            <h1>Title</h1>
-                            <p>Date fill in here</p>
-                        </div>
-                        <div class="card-content"> Content card 2</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">
-                            <h1>Title</h1>
-                            <p>Date fill in here</p>
-                        </div>
-                        <div class="card-content"> Content card 3</div>
-                    </div>
-                </div> -->
+        <div  class="tour-list-parent">
+          <div v-for="post of posts" class="tour-child card">
+            <div class="top-right"><i class="fa-solid fa-trash-can fa-lg"></i></div>
+            <img
+              class="card-img-top"
+              src="https://hegka.com/storage/image-content/N8GKHx1ldeMY3uv2OPa9Ls5N9rt8U0N31rcFStIWVrRaX.webp"
+              alt="Card image cap"
+            />
+            <div class="caption">
+              <h5>{{post.numberOfDays}} days in Hanoi</h5>
+              <p class="date-detail">
+                {{ formatDate(post.startDate) }} - {{formatDate(post.endDate) }}
+              </p>
+            </div>
+            <div class="card-body">
+              <p class="card-text text-center tour-summary">August . Popular Sights</p>
+              <a href="#" class="stretched-link"></a>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="pc-advertisement">
         <p>Easy to use, easy to browse</p>
@@ -143,6 +138,7 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import * as jquery from "../assets/js/jquery.min.js";
 import { PlanServices } from "../services/plan.services.js";
 // import { useCanister, useWallet } from "@connect2ic/vue"
@@ -167,11 +163,47 @@ const planning = async () => {
     console.log(error);
   }
 };
+
+
 </script>
 <script>
+
+
+ 
+export default {
+  data() {
+    return {
+      posts: [],
+      errors: [],
+    };
+  },
+  created() {
+    axios.get(`http://localhost:8080/trip/getByAccount/test`)
+      .then((response) => {
+        this.posts = response.data;
+        console.log(this.posts)
+      })
+      .catch((e) => {
+        this.errors.push(e);
+        console.log("fail")
+      });
+  },
+  methods: {
+    formatDate(date) {
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      return new Date(date).toLocaleDateString("en", options);
+    },
+  },
+};
+
 $(document).ready(function () {
-  CheckExistTrip();
-   
+  //CheckExistTrip();
+
   function CheckExistTrip() {
     $.ajax({
       url: "http://localhost:8080/trip/getByAccount/test",
@@ -186,7 +218,7 @@ $(document).ready(function () {
           $(list_trip).html("My Trip (" + result.length + ")");
           let cards = document.createElement("div");
           $(cards).addClass("tour-list-parent");
-          console.log(result.length)
+          console.log(result.length);
           if (result.length <= 3) {
             for (let i = 0; i < result.length; i++) {
               let card = document.createElement("div");
@@ -285,21 +317,22 @@ $(document).ready(function () {
               $(card).append(card_body);
               cards.append(card);
             }
-             $(cards).append($("<a>").html("See all my trips").attr("href","#").attr("class","full-trip-link"))
+            $(cards).append(
+              $("<a>")
+                .html("See all my trips")
+                .attr("href", "#")
+                .attr("class", "full-trip-link")
+            );
           }
           $(appendELement).append(list_trip);
           $(appendELement).append(cards);
-         
+        } else {
         }
-        
-         else {
-
-        }
-         $(".top-right").on("click", function() {
-        if (confirm("Do you want to delete this trip?")) {
-            $(this).closest('.card').css("display", "none");
-        }
-    });
+        $(".top-right").on("click", function () {
+          if (confirm("Do you want to delete this trip?")) {
+            $(this).closest(".card").css("display", "none");
+          }
+        });
       },
       error: function (xhr, status, error) {
         console.log(xhr);
